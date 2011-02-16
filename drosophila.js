@@ -6,6 +6,9 @@ alert('drosophila.js loaded');
  * 	simply a number/statistic.
  */
 
+/**
+ * Builds our Alleles and stores them in the registry.
+ */
 function __createAlleles()
 {
 	// Pseudo-constants, make the list look cleaner.
@@ -63,7 +66,6 @@ function __createAlleles()
 
 __createAlleles();
 
-
 /**
  * Maintain an Allele list.
  *  A static class.
@@ -79,11 +81,24 @@ function AlleleReg(allele)
 	AlleleReg.getAlleles = function() {
 		return AlleleReg._registry;
 	};
+
+	// Lookup allele by its code
+	AlleleReg.findAllele = function(code)
+	{
+		assert(typeof(code) == 'string', 'findAllele(string)');
+
+		code = code.toUpperCase();
+		for(var i = 0; i < AlleleReg._registry.length; i++) {
+			var a = AlleleReg._registry[i];
+			if(a.code == code) 
+				return a;
+		};
+		return null;
+	};
 };
 
-
 /**
- * Defines an Allele.
+ * Represents an Allele.
  */
 function Allele(name, code, chromo, position, dominant, lethal)
 {
@@ -144,7 +159,22 @@ function Genotype()
 	// Genes 'held' AND number of copies. 
 	// WT genes are not encoded at all. 
 	this.genes = {}; 
-	this.sex = 'f';
+	this.sex = 'f'; // TODO: Remove redundancy!!
+
+	/**
+	 * Set as homozygous for a particular allele unless
+	 * it is X-linked or Letal.
+	 */
+	this.setAs = function(allele)
+	{
+		assert(typeof(allele) in ['string', 'Allele'],
+				'Allele not correct type');
+
+		if(typeof(allele) == 'string') {
+		};
+		
+	};
+
 
 	this.getPhenotype = function() {
 		return null;
@@ -163,16 +193,29 @@ function Genotype()
 };
 
 /**
- * Random number generation.
+ * Random integer generation.
  * 		- rand() returns 0 or 1
- * 		- rand(11) returns 0 through 11
+ * 		- rand(n) returns 0 through n-1
  */
 function rand(n)
 {
 	if(typeof n == 'undefined' || n <= 1) {
 		return Math.round(Math.random()); // XXX: Is this correct?
 	}
-	return Math.floor(Math.random()*(n+1));
+	return Math.floor(Math.random()*n);
 };
 
-
+/**
+ * Assert function.
+ * 	XXX: Is this correct?
+ */
+function assert(stmt, msg)
+{
+	if(!stmt) {
+		if(typeof(msg) == 'undefined') {
+			msg = 'Undocumented Assert Failed.';
+		};
+		alert(msg);
+		throw new Error(msg);
+	};
+};
