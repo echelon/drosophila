@@ -6,13 +6,17 @@
 		<script type="text/javascript">
 
 			function test() {
-				assert( 1 in [1, 2]);
-				alert(AlleleReg.findAllele('EY'));
-						
-				//alert(GENES);
-				//alert(getAlleles());
+				//assert( 1 in [1, 2]);
 
-				alert(rand(2));
+				var alleles = AlleleReg.getAlleles();
+				//alert(AlleleReg.findAllele('EY'));
+						
+				/*for(var i = 0; i < alleles.length; i++) {
+					if(!alleles[i].isAutosomal()) {
+						alert(alleles[i]);
+					};
+				};*/
+
 				//alert(new Genotype().getSex());
 			};
 

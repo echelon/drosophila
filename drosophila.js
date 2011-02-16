@@ -78,11 +78,17 @@ function AlleleReg(allele)
 
 	AlleleReg._registry.push(allele); // TODO: Maintain uniqueness.
 
+	/**
+	 * Returns the list of all Alleles.
+	 */
 	AlleleReg.getAlleles = function() {
 		return AlleleReg._registry;
 	};
 
-	// Lookup allele by its code
+	/**
+	 * Lookup Allele by its code.
+	 * 	- Returns Allele or null
+	 */
 	AlleleReg.findAllele = function(code)
 	{
 		assert(typeof(code) == 'string', 'findAllele(string)');
@@ -128,7 +134,15 @@ function Allele(name, code, chromo, position, dominant, lethal)
 		this.lethal = lethal;
 	};
 
-	// String encoding for debugging. 
+	this.isLethal = function() { return this.lethal; };
+	
+	this.isAutosomal = function() { 
+		return (this.chromo.toUpperCase() != 'X'); 
+	};
+
+	/**
+	 * String encoding for debugging. 
+	 */
 	this.toString = function () {
 		var str = 'Allele: [' + this.code + "/" + this.name + " @ " 
 			+ this.chromo + ":" 
@@ -170,18 +184,44 @@ function Genotype()
 		assert(typeof(allele) in ['string', 'Allele'],
 				'Allele not correct type');
 
-		if(typeof(allele) == 'string') {
-		};
-		
-	};
+		var sex = '';
 
+		if(typeof(allele) == 'string') {
+			allele = AlleleReg.findAllele(allele); 
+			if(!allele) 
+				return;
+		};
+
+		// Handle autosomal genes
+		if(allele.isAutosomal()) {
+			this.genes[allele.code] = newGene(allele, 1);
+			if(allele.isLethal()) {
+				this.genes[allele.code] = newGene(allele, 2);
+			};
+			return;
+		};
+
+		// Handle X-linked genes.
+		sex = this.getSex();
+
+		// Cannot create X-linked lethal males
+		if(sex == 'm' && allele.isLethal()) {
+			return;
+		}
+
+		this.genes[allele.code] = newGene(allele, 1);
+
+		if(sex == 'f' && !allele.isLethal()) {
+			this.genes[allele.code] = newGene(allele, 2);
+		}
+	};
 
 	this.getPhenotype = function() {
 		return null;
 	};
 
 	this.getSex = function() {
-		return this.sex;
+		return this.sex; // TODO: Read direct from genome
 	};
 
 	this.getSexTextual = function() {
@@ -190,6 +230,14 @@ function Genotype()
 		}
 		return 'male';
 	};
+};
+
+// ============================================================== //
+
+// Format
+function addGene(allele, numCopies)
+{
+	return {allele, numCopies};
 };
 
 /**
