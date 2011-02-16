@@ -1,3 +1,5 @@
+alert('drosophila.js loaded');
+
 /**
  * NOTES:
  * 	Unlike Python ver, no actual individuals. Everything is 
@@ -6,10 +8,14 @@
 
 
 // Global containing chromosomes.
-GENES = 'asdf';
+//GENES = 'asdf';
 
-A = Allele('Test', 'T', 'X', 4.4, true);
-
+function getAlleles()
+{
+	alert('getAlleles()');
+	ASDF = new Allele('Test', 'T', 'X', 4.4, true);
+	return ASDF;
+};
 
 /**
  * Contains the information for an allele.
@@ -25,28 +31,29 @@ function Allele(name, code, chromo, position, dominant, lethal)
 	this.dominant = false;
 	this.lethal = false;
 
-	if(typeof dominant == 'bool') {
+	if(typeof dominant == 'boolean') {
 		this.dominant = dominant;
 	};
 
-	if(typeof lethal == 'bool') {
+	if(typeof lethal == 'boolean') {
 		this.lethal = lethal;
 	};
 
 	// String encoding for debugging. 
 	this.toString = function () {
-		var str = this.name + "(" + this.code + ") @ " 
-			+ this.chromo + ":" 
+		var str = 'Allele: [' + this.code + "/" + this.name + " @ " 
+			+ this.chromo + "_" 
 			+ this.position;
 		if(this.dominant) {
-			str += "dominant";
+			str += ", dominant";
 			if(this.lethal) {
 				str += "/lethal";
 			}
 		}
 		else if(this.lethal) {
-			str += "lethal";
+			str += ", lethal";
 		}
+		str += ']';
 		return str;
 	};
 
@@ -66,21 +73,20 @@ function Genotype()
 	this.genes = {}; 
 	this.sex = 'f';
 
-	this.getPhenotype == function() {
+	this.getPhenotype = function() {
 		return null;
 	};
 
-	this.getSex == function() {
+	this.getSex = function() {
 		return this.sex;
 	};
 
-	this.getSexTextual == function() {
+	this.getSexTextual = function() {
 		if(this.sex == 'f') {
 			return 'female';
 		}
 		return 'male';
 	};
-
 };
 
 /**
@@ -91,7 +97,7 @@ function Genotype()
 function rand(n)
 {
 	if(typeof n == 'undefined' || n <= 1) {
-		return Math.random();
+		return Math.round(Math.random()); // XXX: Is this correct?
 	}
 	return Math.floor(Math.random()*(n+1));
 };
