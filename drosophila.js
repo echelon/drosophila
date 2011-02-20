@@ -1,5 +1,3 @@
-alert('drosophila.js loaded');
-
 /**
  * NOTES:
  * 	Unlike Python ver, no actual individuals. Everything is 
@@ -7,109 +5,14 @@ alert('drosophila.js loaded');
  */
 
 /**
- * Builds our Alleles and stores them in the registry.
- */
-function __createAlleles()
-{
-	// Pseudo-constants, make the list look cleaner.
-	var Dominant = true;
-	var Lethal = true;
-	var X = 'x';
-
-	// Bristle
-	AlleleReg(new Allele('Forked', 'F', X, 56.3));
-	AlleleReg(new Allele('Shaven', 'SV', 4, 3.0));
-	AlleleReg(new Allele('Singed', 'SN', X, 21.0));
-	AlleleReg(new Allele('Spineless', 'SS', 3, 58.5));
-	AlleleReg(new Allele('Stubble', 'SB', 3, 58.2, Dominant, Lethal));
-
-	// Body Color
-	AlleleReg(new Allele('Black', 'BL', 2, 48.5));
-	AlleleReg(new Allele('Ebony', 'E', 3, 70.7));
-	AlleleReg(new Allele('Sable', 'S', X, 43.0));
-	AlleleReg(new Allele('Tan', 'T', X, 27.7));
-	AlleleReg(new Allele('Yellow', 'Y', X, 0.0));
-
-	// Antennae
-	AlleleReg(new Allele('Aristapedia', 'AR', 3, 47.7, Dominant));
-
-	// Eye Color
-	AlleleReg(new Allele('Brown', 'BW', 2, 104.5));
-	AlleleReg(new Allele('Purple', 'PR', 2, 54.5));
-	AlleleReg(new Allele('Sepia', 'SE', 3, 26.0));
-	AlleleReg(new Allele('White', 'W', X, 1.5));
-
-	// Eye Shape
-	AlleleReg(new Allele('Bar', 'B', X, 57.0, Dominant));
-	AlleleReg(new Allele('Eyeless', 'EY', 4, 2.0));
-	AlleleReg(new Allele('Lobe', 'L',	2, 72.0, Dominant));
-	AlleleReg(new Allele('Star', 'ST', 2, 1.3, Dominant, Lethal));
-
-	// Wing Size
-	AlleleReg(new Allele('Apterous', 'AP', 2, 55.4));
-	AlleleReg(new Allele('Miniature', 'M', X, 36.1));
-	AlleleReg(new Allele('Vestigial', 'VG', 2, 67.0));
-
-	// Wing Shape
-	AlleleReg(new Allele('Curly', 'CY', 2, 6.1, Dominant, Lethal));
-	AlleleReg(new Allele('Curved', 'C', 2, 75.5));
-	AlleleReg(new Allele('Dumpy', 'DP', 2, 13.0));
-	AlleleReg(new Allele('Scalloped', 'SD', X, 51.5));
-
-	// Wing Vein
-	AlleleReg(new Allele('Crossveinless', 'CV', X, 13.7));
-	AlleleReg(new Allele('Radius Incomplete', 'RI', 3, 48.4));
-
-	// Wing Angle
-	AlleleReg(new Allele('Dichaete', 'D', 3, 41.0, Dominant, Lethal));
-};
-
-__createAlleles();
-
-/**
- * Maintain an Allele list.
- *  A static class.
- */
-function AlleleReg(allele)
-{
-	if(typeof AlleleReg._registry == 'undefined') {
-		AlleleReg._registry = [];
-	};
-
-	AlleleReg._registry.push(allele); // TODO: Maintain uniqueness.
-
-	/**
-	 * Returns the list of all Alleles.
-	 */
-	AlleleReg.getAlleles = function() {
-		return AlleleReg._registry;
-	};
-
-	/**
-	 * Lookup Allele by its code.
-	 * 	- Returns Allele or null
-	 */
-	AlleleReg.findAllele = function(code)
-	{
-		assert(typeof(code) == 'string', 'findAllele(string)');
-
-		code = code.toUpperCase();
-		for(var i = 0; i < AlleleReg._registry.length; i++) {
-			var a = AlleleReg._registry[i];
-			if(a.code == code) 
-				return a;
-		};
-		return null;
-	};
-};
-
-/**
  * Represents an Allele.
  */
-function Allele(name, code, chromo, position, dominant, lethal)
+function Allele(name, code, trait, chromo, position, dominant, lethal)
 {
 	this.name = name;
 	this.code = code;
+
+	this.trait = trait;
 
 	this.chromo = chromo;
 	this.position = position;
@@ -133,6 +36,10 @@ function Allele(name, code, chromo, position, dominant, lethal)
 	if(typeof lethal == 'boolean') {
 		this.lethal = lethal;
 	};
+
+	this.getCode = function() { return this.code; };
+	this.getName = function() { return this.name; };
+	this.getTrait = function() { return this.trait; };
 
 	this.isLethal = function() { return this.lethal; };
 	
@@ -162,6 +69,27 @@ function Allele(name, code, chromo, position, dominant, lethal)
 };
 
 /**
+ * Represents a Trait.
+ */
+function Trait(name, abbr)
+{
+	this.name = name;
+	this.abbr = abbr;
+
+	this.getAbbr = function() { return abbr; };
+	this.getName = function() { return name; };
+
+	this.getAlleles = function() {
+		// TODO;
+		return false;
+	};
+
+	this.toString = function() {
+		return 'Trait: [' + this.abbr + '/' + this.name + ']';			
+	};
+};
+
+/**
  * Represents a Genotype.
  *  Anything encoded in the genome is present here. 
  *
@@ -181,22 +109,23 @@ function Genotype()
 	 */
 	this.setAs = function(allele)
 	{
-		assert(typeof(allele) in ['string', 'Allele'],
+		// FIXME: DOES NOT WORK. typeof() is not what you think!
+		assert(typeof(allele) in {'string':1, 'Allele':1},
 				'Allele not correct type');
 
 		var sex = '';
 
 		if(typeof(allele) == 'string') {
-			allele = AlleleReg.findAllele(allele); 
+			allele = Reg.getAllele(allele); 
 			if(!allele) 
 				return;
 		};
 
 		// Handle autosomal genes
 		if(allele.isAutosomal()) {
-			this.genes[allele.code] = newGene(allele, 1);
+			this.genes[allele.code] = addGene(allele, 1);
 			if(allele.isLethal()) {
-				this.genes[allele.code] = newGene(allele, 2);
+				this.genes[allele.code] = addGene(allele, 2);
 			};
 			return;
 		};
@@ -209,10 +138,10 @@ function Genotype()
 			return;
 		}
 
-		this.genes[allele.code] = newGene(allele, 1);
+		this.genes[allele.code] = addGene(allele, 1);
 
 		if(sex == 'f' && !allele.isLethal()) {
-			this.genes[allele.code] = newGene(allele, 2);
+			this.genes[allele.code] = addGene(allele, 2);
 		}
 	};
 
@@ -230,6 +159,25 @@ function Genotype()
 		}
 		return 'male';
 	};
+
+	this.numGenes = function() {
+		var cnt = 0;
+		for(var o in this.genes) {
+			cnt++;
+		}
+		return cnt;
+	};
+
+	this.toString = function() {
+		if(this.numGenes() == 0) {
+			return 'Genome: WT';
+		};
+		var ret = '';
+		for(var gene in this.genes) {
+			ret += gene.allele.code + 'x' + gene.copies + ', ';
+		}
+		return ret;
+	};
 };
 
 // ============================================================== //
@@ -237,7 +185,7 @@ function Genotype()
 // Format
 function addGene(allele, numCopies)
 {
-	return {allele, numCopies};
+	return {'allele':allele, 'copies':numCopies};
 };
 
 /**

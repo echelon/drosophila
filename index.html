@@ -3,13 +3,26 @@
 		<title>TEST</title>
 		<script type="text/javascript" src="./lib/jquery.js"></script>
 		<script type="text/javascript" src="./drosophila.js"></script>
+		<script type="text/javascript" src="./defs.js"></script>
 		<script type="text/javascript">
 
 			function test() {
-				//assert( 1 in [1, 2]);
+				//assert(typeof('asdf') in {'string':1, 'int':1}, 'foo');
 
-				var alleles = AlleleReg.getAlleles();
-				//alert(AlleleReg.findAllele('EY'));
+
+				var alleles = Reg.getAlleles();
+				alert(alleles[0]);
+
+				alert(Reg.getTraits());
+				alert(Reg.getTrait('BR'));
+
+				var a = new Genotype();
+				a.sex = 'm';
+				a.setAs('Y');
+				alert(a);
+
+
+				//alert(Reg.getAllele('EY'));
 						
 				/*for(var i = 0; i < alleles.length; i++) {
 					if(!alleles[i].isAutosomal()) {
