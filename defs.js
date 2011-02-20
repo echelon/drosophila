@@ -1,8 +1,9 @@
 
 /**
- * Builds our Alleles and stores them in the registry.
+ * Builds our Alleles and Traits and stores them in the 
+ * registry.
  */
-function __createAlleles()
+function __build()
 {
 	// Pseudo-constants, make the list look cleaner.
 	var Dominant = true;
@@ -72,7 +73,7 @@ function __createAlleles()
 	Reg(new Allele('Dichaete', 'D', ag, 3, 41.0, Dominant, Lethal));
 };
 
-__createAlleles();
+__build();
 
 /**
  * Registry to maintain Trait and Allele maps.

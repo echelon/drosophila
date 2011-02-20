@@ -2,23 +2,23 @@
 	<head>
 		<title>TEST</title>
 		<script type="text/javascript" src="./lib/jquery.js"></script>
-		<script type="text/javascript" src="./drosophila.js"></script>
+		<script type="text/javascript" src="./gene.js"></script>
+		<script type="text/javascript" src="./misc.js"></script>
 		<script type="text/javascript" src="./defs.js"></script>
+		<script type="text/javascript" src="./genotype.js"></script>
 		<script type="text/javascript">
 
 			function test() {
 				//assert(typeof('asdf') in {'string':1, 'int':1}, 'foo');
 
-
-				var alleles = Reg.getAlleles();
-				alert(alleles[0]);
-
-				alert(Reg.getTraits());
-				alert(Reg.getTrait('BR'));
-
+				alert("Creating genotype...");
 				var a = new Genotype();
+
+				alert(a);
+
 				a.sex = 'm';
 				a.setAs('Y');
+				a.setAs('SV');
 				alert(a);
 
 
