@@ -9,6 +9,7 @@
 		<script type="text/javascript" src="./defs.js"></script>
 		<script type="text/javascript" src="./genotype.js"></script>
 		<script type="text/javascript" src="./phenotype.js"></script>
+		<script type="text/javascript" src="./generation.js"></script>
 		<script type="text/javascript">
 
 			function test() {
@@ -27,11 +28,14 @@
 				b.setHomozygousFor('SV');
 
 				var off = a.recombine(b);
-				var d = off[0];
 
-				var off2 = c.recombine(d);
 				alert(off);
-				alert(off2);
+
+				//alert(d.hash());
+
+				//var off2 = c.recombine(d);
+				//alert(off);
+				//alert(off2);
 
 				//alert(a.equals(b));
 				//alert(a.equals(c));

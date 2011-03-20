@@ -81,6 +81,40 @@ function Genotype()
 	};
 
 	/**
+	 * TODO: TEMPORARY.
+	 * A hash function for the Genotype.
+	 */
+	this.hash = function()
+	{
+		var str = '';
+		var keys = [];
+
+		str += this.sex + '/';
+
+		for(var abbr in this.genes) {
+			keys.push(abbr);	
+		};
+		keys.sort();
+		
+		for(var i in keys) {
+			var tr = this.genes[keys[i]];
+			var abbrs = [];
+			if(tr.length == 1) {
+				abbrs.push(tr[0].code);
+			}
+			else if(tr.length == 2) {
+				abbrs.push(tr[0].code);
+				abbrs.push(tr[1].code);
+			};
+			abbrs.sort();
+			for(var j in abbrs) {
+				str += abbrs[j] + '/';
+			};
+		};
+		return str;
+	}
+
+	/**
 	 * Determine if two Genotypes are the same.
 	 */
 	this.equals = function(genotype)
@@ -276,7 +310,7 @@ function Genotype()
 		var traits = traitUnion(this, genotype);	
 
 		if(typeof number == 'undefined') {
-			number = 12; // TODO: Poor default choice
+			number = 10 // TODO: Poor default choice
 		};
 
 		//number += vary;
@@ -316,9 +350,7 @@ function Genotype()
 			offspring.push(indiv);
 		};
 
-		// TODO
-
-		return offspring;
+		return new Generation(offspring);
 	};
 };
 
