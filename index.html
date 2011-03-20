@@ -15,19 +15,24 @@
 				//assert(typeof('asdf') in {'string':1, 'int':1}, 'foo');
 
 				alert("Creating genotype...");
+
 				var a = new Genotype();
-
-				alert(a);
-				alert(a.getPhenotype());
-
-				a.sex = 'm';
+				a.setSex('m');
 				a.setHomozygousFor('Y');
 				a.setHomozygousFor('SV');
 
-				alert(a);
-				alert(a.getPhenotype());
 
+				var b = new Genotype();
+				b.setSex('m');
+				b.setHomozygousFor('Y');
+				b.setHomozygousFor('SV');
 
+				var c = new Genotype();
+				c.setSex('m');
+				c.setHomozygousFor('SV');
+
+				alert(a.equals(b));
+				alert(a.equals(c));
 
 				//alert(Reg.getAllele('EY'));
 						

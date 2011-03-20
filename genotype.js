@@ -1,15 +1,18 @@
 /**
- * Represents a Genotype.
- * Anything encoded in the genome is present here. 
+ * Genotype.
+ * Anything encoded in the genome is present here. (TODO: Better doc)
  *
  * Note: This does not represent an individual, rather 
  * a 'class' of such individuals.
  */
 function Genotype()
 {
-	// Genes 'held' AND number of copies. 
-	// WT genes are not encoded at all. 
-	this.genes = {}; // TODO: THIS WILL NOT WORK!!
+	// The genes dict is indexed by Trait abbreviation. Where
+	// non-WT Alleles exist, there is a list that contains one
+	// or two Alleles. (WT traits are not encoded at all.)
+	// TODO: This is probably not an optimal way to encode this.
+	this.genes = {}; 
+
 	this.sex = 'f'; // TODO: Read straight from genome? 
 
 	/*******************************************/
@@ -75,6 +78,46 @@ function Genotype()
 		ret = ret.substr(0, ret.length - 2);
 		ret += ' (' + this.getSexStr() + ')'; 
 		return 'Genotype: ' + ret; 
+	};
+
+	/**
+	 * Determine if two Genotypes are the same.
+	 * TODO: Not tested
+	 */
+	this.equals = function(genotype)
+	{
+		if(this.sex != genotype.sex) {
+			return false;
+		};
+
+		if(this.numTraits() != genotype.numTraits()) {
+			return false;
+		};
+		
+		for(abbr in this.genes) {
+			if(!genotype.genes[abbr]) {
+				return false;
+			};
+			if(this.genes[abbr].length != genotype.genes[abbr].length) {
+				return false;
+			};
+
+			// Compare the alleles of the Trait to each other.
+			if(this.genes[abbr].length == 1 && 
+					this.genes[abbr][0] != genotype.genes[abbr][0]) {
+				return false;
+			}
+			else {
+				var a = this.genes[abbr][0];
+				var b = this.genes[abbr][1];
+				var c = genotype.genes[abbr][0];
+				var d = genotype.genes[abbr][1];
+				if((a != c || b != d) && (a != d || b != c)) {
+					return false;
+				}
+			}
+		};
+		return true;
 	};
 
 	/**
