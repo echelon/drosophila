@@ -18,6 +18,9 @@ function Generation(indivs)
 		};
 	};
 
+	/**
+	 * String representation of the generation.
+	 */
 	this.toString = function()
 	{
 		var ret = "";

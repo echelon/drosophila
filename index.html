@@ -2,15 +2,18 @@
 	<head>
 		<title>TEST</title>
 		<script type="text/javascript" src="./lib/jquery.js"></script>
-		<script type="text/javascript" src="./allele.js"></script>
-		<script type="text/javascript" src="./trait.js"></script>
-		<script type="text/javascript" src="./registry.js"></script>
-		<script type="text/javascript" src="./misc.js"></script>
-		<script type="text/javascript" src="./defs.js"></script>
-		<script type="text/javascript" src="./genotype.js"></script>
-		<script type="text/javascript" src="./phenotype.js"></script>
-		<script type="text/javascript" src="./generation.js"></script>
+		<script type="text/javascript" src="./model/allele.js"></script>
+		<script type="text/javascript" src="./model/trait.js"></script>
+		<script type="text/javascript" src="./model/registry.js"></script>
+		<script type="text/javascript" src="./model/misc.js"></script>
+		<script type="text/javascript" src="./model/defs.js"></script>
+		<script type="text/javascript" src="./model/genotype.js"></script>
+		<script type="text/javascript" src="./model/phenotype.js"></script>
+		<script type="text/javascript" src="./model/generation.js"></script>
+		<script type="text/javascript" src="./view/generations.js"></script>
 		<script type="text/javascript">
+
+			var GENS = new Generations();
 
 			function test() {
 
@@ -29,7 +32,19 @@
 
 				var off = a.recombine(b);
 
-				alert(off);
+
+				GENS.push(off);
+
+				//alert("Used traits & alleles");
+				//alert(GENS.usedTraits());
+				//alert(GENS.unusedTraits());
+				//alert(GENS.usedTraitAlleles());
+
+				alert("Test usedTraitAllele()");
+				alert(GENS.usedTraitAllele(Reg.getTrait('AN')));
+				alert(GENS.usedTraitAllele(Reg.getTrait('ES'))); // SHould be null
+				alert(GENS.usedTraitAllele('BR'));
+				alert(GENS.usedTraitAllele('EC')); // Should be null
 
 				//alert(d.hash());
 
