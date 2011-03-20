@@ -82,7 +82,6 @@ function Genotype()
 
 	/**
 	 * Determine if two Genotypes are the same.
-	 * TODO: Not tested
 	 */
 	this.equals = function(genotype)
 	{
@@ -116,6 +115,43 @@ function Genotype()
 					return false;
 				}
 			}
+		};
+		return true;
+	};
+
+	/**
+	 * Whether the Genotype is a valid one.  
+	 */
+	this.valid = function()
+	{
+		for(abbr in this.genes)
+		{
+			var tr = this.genes[abbr];
+			if(tr.length == 1) {
+				if(tr[0].isLethal() && !tr[0].isAutosomal() 
+						&& this.sex == 'm') {
+					return false; // Lethal X-linked male
+				}
+			}
+			else if(tr.length == 2) {
+				if(tr[0].isLethal() && tr[1].isLethal()) {
+					return false; // Two lethal alleles!
+				};
+				if(!tr[0].isAutosomal() && !tr[1].isAutosomal() 
+						&& this.sex == 'm') {
+					// Can't have a male with two X-linked alleles in
+					// the same trait.
+					return false; 
+				};
+				if((tr[0].isLethal() && !tr[0].isAutosomal() 
+						&& this.sex == 'm') || (tr[1].isLethal() 
+						&& !tr[1].isAutosomal() && this.sex == 'm'))  {
+					return false; // Lethal X-linked allele in a male (bizarre)
+				};
+			}
+			else {
+				return false; // Too many alleles! Can only have two. 
+			};
 		};
 		return true;
 	};
@@ -185,6 +221,104 @@ function Genotype()
 			// Everybody else gets one copy
 			setAllele(allele, 1);
 		};
+	};
+
+	/**
+	 * Set heterozygous for two alleles. Used by recombine().
+	 * TODO: I don't like this. 
+	 * XXX: Does not check for improper configurations, such as double 
+	 * lethals and double X-linked males.
+	 */
+	this._setAlleles = function(a1, a2)
+	{
+		var loc = '';
+		
+		if(a1) {
+			loc = a1.trait.abbr.toUpperCase();
+		}
+		else if(a2) {
+			loc = a2.trait.abbr.toUpperCase();
+		}
+		else {
+			return; // XXX: Alert/warning
+		}
+		this.genes[loc] = [];
+
+		if(a1) {
+			this.genes[loc].push(a1);
+		};
+		if(a2) {
+			this.genes[loc].push(a2);
+		};
+	};
+
+	/**
+	 * TODO TODO TODO -- THIS IS NOT IDEAL
+	 * I need to write a combinatoric function, because this is insanely
+	 * lazy and makes a huge performance hit. Very unsophisticated. 
+	 */
+	this.recombine = function(genotype, number)
+	{
+		// Func: Get a union of all traits
+		var traitUnion = function(genoA, genoB) {
+			dict = {};
+			for(var abbr in genoA.genes) {
+				dict[abbr] = 1;
+			};
+			for(var abbr in genoB.genes) {
+				dict[abbr] = 1;
+			}
+			return dict;
+		};
+
+		var offspring = [];
+		var vary = rand(20); // TODO: Poor randomization
+		var traits = traitUnion(this, genotype);	
+
+		if(typeof number == 'undefined') {
+			number = 12; // TODO: Poor default choice
+		};
+
+		//number += vary;
+
+		for(var i = 0; i < number; i++) {
+			var indiv = new Genotype();
+
+			if(rand()) {
+				indiv.setSex('m');
+			}
+			else {
+				indiv.setSex('f');
+			};
+
+			for(abbr in traits) {
+				var a1 = null;
+				var a2 = null;
+				var idx = 0;
+				if(abbr in this.genes) {
+					idx = rand();
+					if(idx in this.genes[abbr]) {
+						a1 = this.genes[abbr][idx];
+					};
+				};
+				if(abbr in genotype.genes) {
+					idx = rand();
+					if(idx in genotype.genes[abbr]) {
+						a2 = genotype.genes[abbr][idx];
+					};
+				};
+				indiv._setAlleles(a1, a2);
+			};
+
+			if(!indiv.valid()) {
+				continue;
+			}
+			offspring.push(indiv);
+		};
+
+		// TODO
+
+		return offspring;
 	};
 };
 

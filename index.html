@@ -12,27 +12,29 @@
 		<script type="text/javascript">
 
 			function test() {
-				//assert(typeof('asdf') in {'string':1, 'int':1}, 'foo');
-
-				alert("Creating genotype...");
 
 				var a = new Genotype();
-				a.setSex('m');
-				a.setHomozygousFor('Y');
+				a.setSex('f');
+				//a.setHomozygousFor('Y');
 				a.setHomozygousFor('SV');
-
 
 				var b = new Genotype();
 				b.setSex('m');
-				b.setHomozygousFor('Y');
+				b.setHomozygousFor('AR');
+				
+				var c = new Genotype();
+				b.setSex('f');
 				b.setHomozygousFor('SV');
 
-				var c = new Genotype();
-				c.setSex('m');
-				c.setHomozygousFor('SV');
+				var off = a.recombine(b);
+				var d = off[0];
 
-				alert(a.equals(b));
-				alert(a.equals(c));
+				var off2 = c.recombine(d);
+				alert(off);
+				alert(off2);
+
+				//alert(a.equals(b));
+				//alert(a.equals(c));
 
 				//alert(Reg.getAllele('EY'));
 						
