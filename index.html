@@ -8,6 +8,7 @@
 		<script type="text/javascript" src="./misc.js"></script>
 		<script type="text/javascript" src="./defs.js"></script>
 		<script type="text/javascript" src="./genotype.js"></script>
+		<script type="text/javascript" src="./phenotype.js"></script>
 		<script type="text/javascript">
 
 			function test() {
@@ -17,11 +18,15 @@
 				var a = new Genotype();
 
 				alert(a);
+				alert(a.getPhenotype());
 
 				a.sex = 'm';
-				a.setAs('Y');
-				a.setAs('SV');
+				a.setHomozygousFor('Y');
+				a.setHomozygousFor('SV');
+
 				alert(a);
+				alert(a.getPhenotype());
+
 
 
 				//alert(Reg.getAllele('EY'));
@@ -41,5 +46,22 @@
 	</head>
 	<body>
 		<p>Test</p>
+
+		<div id="new_pair">
+			<form>
+				<select name="name">
+					<option value="foo">Foo</option>
+					<option value="bar">Bar</option>
+				</select>
+			</form>
+		</div>
+
+		<div id="TODO">
+			<p>This constitutes notes concerning the code.</p>
+			<ul>
+				<li>Generations will be "Tabs" that are navigable.</li>
+				<li>"Create fly" dialog/controls.</li>
+				<li>"Mate" dialog, which allows the user to pick a pair of flies to mate.</li>
+			</ul>	
 	</body>
 </html>

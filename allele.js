@@ -36,6 +36,7 @@ function Allele(name, code, trait, chromo, position, dominant, lethal)
 	this.getName = function() { return this.name; };
 	this.getTrait = function() { return this.trait; };
 
+	this.isDominant = function() { return this.dominant; };
 	this.isLethal = function() { return this.lethal; };
 	
 	this.isAutosomal = function() { 
