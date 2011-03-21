@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>TEST</title>
+		<title>PROJECT</title>
 		<script type="text/javascript" src="./lib/jquery.js"></script>
 		<script type="text/javascript" src="./model/allele.js"></script>
 		<script type="text/javascript" src="./model/trait.js"></script>
@@ -10,84 +10,88 @@
 		<script type="text/javascript" src="./model/genotype.js"></script>
 		<script type="text/javascript" src="./model/phenotype.js"></script>
 		<script type="text/javascript" src="./model/generation.js"></script>
-		<script type="text/javascript" src="./view/generations.js"></script>
+		<script type="text/javascript" src="./view/history.js"></script>
+		<script type="text/javascript" src="./view/domreg.js"></script>
+		<script type="text/javascript" src="./view/form.js"></script>
+		<script type="text/javascript" src="./view/overview.js"></script>
 		<script type="text/javascript">
 
-			var GENS = new Generations();
+			var HIST = new History();
 
 			function test() {
+				DomReg();
 
-				var a = new Genotype();
-				a.setSex('f');
-				//a.setHomozygousFor('Y');
-				a.setHomozygousFor('SV');
+				form = new Form();
 
-				var b = new Genotype();
-				b.setSex('m');
-				b.setHomozygousFor('AR');
-				
-				var c = new Genotype();
-				b.setSex('f');
-				b.setHomozygousFor('SV');
+				overview = new Overview();
+				overview.present();
 
-				var off = a.recombine(b);
-
-
-				GENS.push(off);
-
-				//alert("Used traits & alleles");
-				//alert(GENS.usedTraits());
-				//alert(GENS.unusedTraits());
-				//alert(GENS.usedTraitAlleles());
-
-				alert("Test usedTraitAllele()");
-				alert(GENS.usedTraitAllele(Reg.getTrait('AN')));
-				alert(GENS.usedTraitAllele(Reg.getTrait('ES'))); // SHould be null
-				alert(GENS.usedTraitAllele('BR'));
-				alert(GENS.usedTraitAllele('EC')); // Should be null
-
-				//alert(d.hash());
-
-				//var off2 = c.recombine(d);
-				//alert(off);
-				//alert(off2);
-
-				//alert(a.equals(b));
-				//alert(a.equals(c));
-
-				//alert(Reg.getAllele('EY'));
-						
-				/*for(var i = 0; i < alleles.length; i++) {
-					if(!alleles[i].isAutosomal()) {
-						alert(alleles[i]);
-					};
-				};*/
-
-				//alert(new Genotype().getSex());
 			};
 
 			$(document).ready(function() { test(); });
 
 		</script>
+		<style>
+			#ui_proto { display: none; }
+		</style>
 	</head>
 	<body>
-		<p>Test</p>
 
-		<div id="new_pair">
-			<form>
-				<select name="name">
-					<option value="foo">Foo</option>
-					<option value="bar">Bar</option>
-				</select>
-			</form>
+		<!--
+			Main:
+			This is where the active GUI elements will show up.
+		-->
+		<div id="main">
 		</div>
 
-		<div id="TODO">
-			<p>This constitutes notes concerning the code.</p>
-			<ul>
-				<li>Generations will be "Tabs" that are navigable.</li>
-				<li>"Create fly" dialog/controls.</li>
-				<li>"Mate" dialog, which allows the user to pick a pair of flies to mate.</li>
-			</ul>	
+		<!--
+			UI Prototype:
+			Hidden GUI elements that will be cloned and manipulated.
+		-->
+		<div id="ui_proto">
+
+			<!-- 
+				Main overview 
+			-->
+			<div id="overview">
+				<a href="#" class="new">New</a>
+				<p>TODO TODO TODO</p>
+			</div>
+
+			<!-- 
+				Form for creating / editing genotypes.
+			-->
+			<div id="designer">
+				<a href="#" class="overview">main</a>
+				<br />
+				<img src="./img/blue-grad.png" />
+				<form class="form">
+					<select name="trait" disabled="true">
+						<option value="none">Trait</option>
+					</select>
+					<select name="allele" disabled="true">
+						<option value="none">Allele</option>
+					</select>
+					<input type="submit" disabled="true" value="Add" />
+				</form>
+				<div class="history">
+					<p class="history_default">All traits are WT.</p>
+				</div>
+			</div>
+
+			<!-- 
+				Notes to self concerning code, progress, etc. 
+			-->
+			<div id="todo">
+				<p>This constitutes notes concerning the code.</p>
+				<ul>
+					<li>Generations will be "Tabs" that are navigable.</li>
+					<li>"Create fly" dialog/controls.</li>
+					<li>"Mate" dialog, which allows the user to pick a pair of flies to mate.</li>
+				</ul>	
+			</div>
+
+		</div>
+
 	</body>
 </html>

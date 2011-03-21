@@ -5,7 +5,7 @@
  * TODO: Should build a cache of alleles and traits used so that 
  * expensive lookup is not necessary.
  */
-function Generations()
+function History()
 {
 	/**
 	 * An array of all Generations, in order.
