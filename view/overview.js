@@ -44,6 +44,15 @@ function Overview()
 	};
 
 	/**
+	 * Update the parents in each section.
+	 * Image, text, etc.
+	 */
+	this.updateParents = function()
+	{
+		
+	};
+
+	/**
 	 * Attach to main.
 	 */
 	this.attach = function()

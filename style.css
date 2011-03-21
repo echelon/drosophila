@@ -64,11 +64,19 @@ h3 {
 	font-size: 1.2em;
 }
 
+.clear {
+	clear: both;
+	height: 1px;
+	width: 1px;
+}
 
 /* Designer Specific */
-.designer_img {
+.designer_img_div {
 	float: right;
 	margin: 0px 50px 0px 0px;
+}
+.designer_img_subtitle {
+	text-align: center;
 }
 
 .designer_other { }
@@ -81,4 +89,60 @@ h3 {
 	padding: 0px;
 }
 
+/* OVERVIEW MODE */
+
+.p_generation {
+	background-color: #ffc;
+	margin: 0px 0px 10px 0px;
+	padding: 10px;
+	text-align: center;
+}
+
+.p_generation h3 {
+	text-align: left;
+}
+
+.p_generation_male {
+	width: 320px;
+	float: left;
+	margin: 0px;
+	padding: 10px;
+	text-align: center;
+}
+
+.p_generation_female {
+	width: 320px;
+	margin: 0px;
+	padding: 10px;
+	float: left;
+	text-align: center;
+}
+
+.p_generation form, .p_generation input {
+	display: inline;
+}
+
+.f_generation_odd {
+	background-color: #fdd;
+	margin: 0px 0px 10px 0px;
+	padding: 10px
+}
+
+.f_generation_even {
+	background-color: #fcc;
+	margin: 0px 0px 10px 0px;
+	padding: 10px
+}
+
+.overview_cross {
+	background-color: #ffc;
+	margin: 0px 0px 10px 0px;
+	padding: 10px
+}
+
+.overview_results {
+	background-color: #fcc;
+	margin: 0px 0px 20px 0px;
+	padding: 10px
+}
 

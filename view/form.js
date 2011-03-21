@@ -83,9 +83,9 @@ function Form(genotype, sex)
 			// TODO
 		};
 
-
 		this.buildTraitSelect();
 		this.setImage();
+		this.updateSubtitle();
 	};
 
 	/**
@@ -210,8 +210,10 @@ function Form(genotype, sex)
 				this.alleles.push(this.selectedAllele);
 			}
 		}
+		this.updateGenotype();
 		this.resetForm();
 		this.updateFeed();
+		this.updateSubtitle();
 	};
 
 	/**
@@ -223,10 +225,7 @@ function Form(genotype, sex)
 		var history = Reg.getHistory();
 		var overview = new Overview();
 
-		for(var i = 0; i < this.alleles.length; i++) {
-			this.genotype.setHomozygousFor(this.alleles[i]);
-		};
-
+		this.updateGenotype();
 		history.parents[this.genotype.getSex()] = this.genotype;
 
 		overview.present(); // XXX: This object is now distructed.
@@ -263,6 +262,16 @@ function Form(genotype, sex)
 	}
 
 	/**
+	 * Update the genotype
+	 */
+	this.updateGenotype = function()
+	{
+		for(var i = 0; i < this.alleles.length; i++) {
+			this.genotype.setHomozygousFor(this.alleles[i]);
+		};
+	};
+
+	/**
 	 * Enable submit button.
 	 */
 	this.enableSubmit = function()
@@ -291,6 +300,16 @@ function Form(genotype, sex)
 			imgDiv.html("<img src=\"./img/red-grad.png\" />");
 		};
 	}
+	
+	/**
+	 * Update the image subtitle.
+	 */
+	this.updateSubtitle = function()
+	{
+		var subtitle = this.formDom.find('.designer_img_subtitle');
+		var phenotype = this.genotype.getPhenotype();
+		subtitle.text(phenotype.phenotypeString());
+	};
 
 	/**
 	 * Attach to main.

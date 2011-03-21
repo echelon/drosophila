@@ -1,7 +1,8 @@
 <html>
 	<head>
-		<title>PROJECT</title>
+		<title>In Silico Genetics Lab</title>
 		<script type="text/javascript" src="./lib/jquery.js"></script>
+		<script type="text/javascript" src="./lib/jquery-ui.js"></script>
 		<script type="text/javascript" src="./model/allele.js"></script>
 		<script type="text/javascript" src="./model/trait.js"></script>
 		<script type="text/javascript" src="./model/history.js"></script>
@@ -14,6 +15,7 @@
 		<script type="text/javascript" src="./view/domreg.js"></script>
 		<script type="text/javascript" src="./view/form.js"></script>
 		<script type="text/javascript" src="./view/overview.js"></script>
+		<link type="text/css" rel="stylesheet" href="./lib/css/smoothness/jquery-ui.css" />
 		<link type="text/css" rel="stylesheet" href="./style.css" />
 		<script type="text/javascript">
 
@@ -24,8 +26,25 @@
 
 				form = new Form();
 
+				var male = new Genotype();
+				male.setSex('m');
+				male.setHomozygousFor('F');
+				HIST.parents['m'] = male;
+
+				var female = new Genotype();
+				female.setSex('f');
+				male.setHomozygousFor('E');
+				male.setHomozygousFor('PR');
+				HIST.parents['f'] = female;
+
 				overview = new Overview();
 				overview.present();
+
+				$("#accordion").accordion();
+				$("#accordion").accordion("option", "animated", "bounceslide");
+				$("#accordion").accordion("option", "collapsible", false);
+				//$("#accordion").accordion({ icons: { 'header': 'ui-icon-plus', 'headerSelected': 'ui-icon-minus' } });
+
 
 			};
 
@@ -56,9 +75,103 @@
 				Main overview 
 			-->
 			<div id="overview">
-				<a href="#" class="new_male">new male</a>
-				<a href="#" class="new_female">new female</a>
-				<p>TODO TODO TODO</p>
+
+				<div id="accordion">
+					<h3><a href="#">Cross #1</a></h3>
+					<div>First content</div>
+					<h3><a href="#">Cross #2</a></h3>
+					<div>Second content</div>
+				</div>
+
+
+
+
+
+
+
+
+
+				<div class="p_generation">
+					<h3>Design Cross #1:</h3>
+					<div class="p_generation_male">
+						<img src="./img/blue-grad.png" width="150" height="125" />
+						<p><a href="#" class="new_male">Design male</a></p>
+					</div>
+					<div class="p_generation_female">
+						<img src="./img/red-grad.png" width="150" height="125" />
+						<p><a href="#" class="new_female">Design Female</a></p>
+					</div>
+					<div class="clear"></div>
+
+					<form class="overview_form_p_generation" action="#" method="get">
+						<input type="submit" value="Breed" />
+					</form>
+				</div>
+
+				<div class="overview_results">
+					<h3>Results: F1 Generation</h3>
+					Pending...
+				</div>
+
+				<div class="overview_cross">
+					<h3>Design Cross #2:</h3>
+					Pending...
+				</div>
+
+				<div class="f_generation_odd">
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+				</div>
+
+				<div class="f_generation_even">
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+				</div>
+
+				<div class="f_generation_odd">
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+				</div>
+
+				<div class="f_generation_even">
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
+				</div>
+
+				<div id="todo">
+					<p>This constitutes notes concerning the code.</p>
+					<ul>
+						<li>Work on "Overview" mode now.</li>
+						<li>Generations will be "Tabs" that are navigable.</li>
+						<li>"Create fly" dialog/controls.</li>
+						<li>"Mate" dialog, which allows the user to pick a pair of flies to mate.</li>
+					</ul>	
+				</div>
+
 			</div>
 
 			<!-- 
@@ -69,7 +182,10 @@
 					<span class="location">Description</span></h3>
 				<br />
 
-				<div class="designer_img">Image Here</div>
+				<div class="designer_img_div">
+					<div class="designer_img">Image Here</div>
+					<p class="designer_img_subtitle">Phenotype Here</p>
+				</div>
 				<div class="designer_other">
 					<form class="designer_form_add_allele" action="#" method="get">
 						<strong>Set:</strong>
@@ -97,15 +213,7 @@
 			<!-- 
 				Notes to self concerning code, progress, etc. 
 			-->
-			<div id="todo">
-				<p>This constitutes notes concerning the code.</p>
-				<ul>
-					<li>Generations will be "Tabs" that are navigable.</li>
-					<li>"Create fly" dialog/controls.</li>
-					<li>"Mate" dialog, which allows the user to pick a pair of flies to mate.</li>
-				</ul>	
-			</div>
-
+			
 		</div>
 		</div>
 

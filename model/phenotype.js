@@ -14,13 +14,25 @@ function Phenotype(genotype)
 		var tr = genotype.genes[abbr];
 		var allele = null;
 
-		if(tr[0].isDominant()) {
-			allele = tr[0];
-		}
-		if(tr.length == 2 && tr[1].isDominant()) {
-			allele = tr[1];
-		}
-		
+		// Rules for displaying phenotype from genotype.
+		if(tr[0].isDominant() || tr[0].isLethal()) {
+			allele = tr[0]; // Dom or lethal
+		};
+		if(!tr[0].isAutosomal() && this.sex == 'm') {
+			allele = tr[0]; // Male X-linked
+		};
+		if(tr.length == 2) {
+			if(!tr[1].isAutosomal() && this.sex == 'm') {
+				allele = tr[1]; // Male X-linked
+			};
+			if(tr[1].isDominant() || tr[1].isLethal()) {
+				allele = tr[1]; // Dom or lethal
+			}
+			else if(tr[0].code == tr[1].code) {
+				allele = tr[0]; // Two copies.
+			};
+		};
+			
 		if(allele) {
 			this.genes[abbr] = allele;
 		}
@@ -68,6 +80,25 @@ function Phenotype(genotype)
 		return 'Phenotype: ' + ret; 
 	};
 
+	/**
+	 * Output string.
+	 */
+	this.phenotypeString = function()
+	{
+		var ret = '';
+
+		if(this.numTraits() == 0) {
+			return 'WT (' + this.getSexStr() + ')';
+		};
+		for(var abbr in this.genes) {
+			ret += this.genes[abbr].code + ", ";
+		};
+
+		ret = ret.substr(0, ret.length - 2);
+		ret += ' (' + this.getSexStr() + ')';
+		return ret; 
+
+	}
 	
 	this.equals = function(pheno) {
 		// TODO
