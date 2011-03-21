@@ -19,28 +19,22 @@
 		<link type="text/css" rel="stylesheet" href="./style.css" />
 		<script type="text/javascript">
 
-			var HIST = new History();
-
 			function test() {
 				DomReg();
 
-				form = new Form();
-
-				var male = new Genotype();
+				/*var male = new Genotype();
 				male.setSex('m');
 				male.setHomozygousFor('F');
-				HIST.parents['m'] = male;
+				Reg.getHistory().parents['m'] = male;
 
 				var female = new Genotype();
 				female.setSex('f');
-				male.setHomozygousFor('E');
-				male.setHomozygousFor('PR');
-				HIST.parents['f'] = female;
+				female.setHomozygousFor('E');
+				female.setHomozygousFor('PR');
+				Reg.getHistory().parents['f'] = female;*/
 
 				overview = new Overview();
 				overview.present();
-
-
 			};
 
 			$(document).ready(function() { test(); });
@@ -77,11 +71,19 @@
 						<div class="overview_parents">
 							<div class="overview_parents_male">
 								<img src="./img/blue-grad.png" width="150" height="125" />
-								<p><a href="#" class="new_male">Design male</a></p>
+								<span class="links">
+									<p class="status">Status Here</p>
+									<p class="new_link"><a href="#" class="new_male">Design male</a></p>
+									<p class="edit_link"><a href="#" class="edit_male">Edit</a></p>
+								</span>
 							</div>
 							<div class="overview_parents_female">
 								<img src="./img/red-grad.png" width="150" height="125" />
-								<p><a href="#" class="new_female">Design Female</a></p>
+								<span class="links">
+									<p class="status">Status Here</p>
+									<p class="new_link"><a href="#" class="new_female">Design female</a></p>
+									<p class="edit_link"><a href="#" class="edit_female">Edit</a></p>
+								</span>
 							</div>
 							<div class="clear"></div>
 

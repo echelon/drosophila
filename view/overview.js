@@ -17,7 +17,7 @@ function Overview()
 	};
 
 	/**
-	 * Show / Hide controls.
+	 * Show DOM 
 	 */
 	this.show = function() 
 	{ 
@@ -31,6 +31,9 @@ function Overview()
 		//			'headerSelected': 'ui-icon-minus' } });
 	};
 
+	/**
+	 * Hide DOM
+	 */
 	this.hide = function() { this.overviewDom.hide(); };
 
 	/**
@@ -52,6 +55,9 @@ function Overview()
 				var form = new Form(false, 'f');
 				form.present();
 		});
+
+		// Update
+		this.updateParents();
 	};
 
 	/**
@@ -60,7 +66,27 @@ function Overview()
 	 */
 	this.updateParents = function()
 	{
-		
+		var parents = Reg.getHistory().parents;
+		var maleDom = this.overviewDom.find('.overview_parents_male');
+		var femaleDom = this.overviewDom.find('.overview_parents_female');
+
+		if(parents['m']) {
+			maleDom.find('.status').html(parents['m'].getPhenotype().phenotypeString());
+			maleDom.find('.new_link').hide();
+		}
+		else {
+			maleDom.find('.status').html('');
+			maleDom.find('.edit_link').hide();
+		};
+
+		if(parents['f']) {
+			femaleDom.find('.status').html(parents['f'].getPhenotype().phenotypeString());
+			femaleDom.find('.new_link').hide();
+		}
+		else {
+			femaleDom.find('.status').html('');
+			femaleDom.find('.edit_link').hide();
+		};
 	};
 
 	/**
