@@ -40,11 +40,6 @@
 				overview = new Overview();
 				overview.present();
 
-				$("#accordion").accordion();
-				$("#accordion").accordion("option", "animated", "bounceslide");
-				$("#accordion").accordion("option", "collapsible", false);
-				//$("#accordion").accordion({ icons: { 'header': 'ui-icon-plus', 'headerSelected': 'ui-icon-minus' } });
-
 
 			};
 
@@ -76,91 +71,36 @@
 			-->
 			<div id="overview">
 
-				<div id="accordion">
+				<div class="accordion">
 					<h3><a href="#">Cross #1</a></h3>
-					<div>First content</div>
+					<div>
+						<div class="overview_parents">
+							<div class="overview_parents_male">
+								<img src="./img/blue-grad.png" width="150" height="125" />
+								<p><a href="#" class="new_male">Design male</a></p>
+							</div>
+							<div class="overview_parents_female">
+								<img src="./img/red-grad.png" width="150" height="125" />
+								<p><a href="#" class="new_female">Design Female</a></p>
+							</div>
+							<div class="clear"></div>
+
+							<form class="overview_form_p_generation" action="#" method="get">
+								<input type="submit" value="Breed" />
+							</form>
+						</div>
+
+						<div class="overview_results">
+							<h3>Results: F1 Generation</h3>
+							Pending...
+						</div>
+
+					</div>
+
 					<h3><a href="#">Cross #2</a></h3>
 					<div>Second content</div>
 				</div>
 
-
-
-
-
-
-
-
-
-				<div class="p_generation">
-					<h3>Design Cross #1:</h3>
-					<div class="p_generation_male">
-						<img src="./img/blue-grad.png" width="150" height="125" />
-						<p><a href="#" class="new_male">Design male</a></p>
-					</div>
-					<div class="p_generation_female">
-						<img src="./img/red-grad.png" width="150" height="125" />
-						<p><a href="#" class="new_female">Design Female</a></p>
-					</div>
-					<div class="clear"></div>
-
-					<form class="overview_form_p_generation" action="#" method="get">
-						<input type="submit" value="Breed" />
-					</form>
-				</div>
-
-				<div class="overview_results">
-					<h3>Results: F1 Generation</h3>
-					Pending...
-				</div>
-
-				<div class="overview_cross">
-					<h3>Design Cross #2:</h3>
-					Pending...
-				</div>
-
-				<div class="f_generation_odd">
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-				</div>
-
-				<div class="f_generation_even">
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-				</div>
-
-				<div class="f_generation_odd">
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-				</div>
-
-				<div class="f_generation_even">
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-					Asdf adsf asdf asdf adsf asdf adf asdf asdfa dfa sdfadfasdf
-				</div>
 
 				<div id="todo">
 					<p>This constitutes notes concerning the code.</p>

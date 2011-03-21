@@ -19,7 +19,18 @@ function Overview()
 	/**
 	 * Show / Hide controls.
 	 */
-	this.show = function() { this.overviewDom.show(); };
+	this.show = function() 
+	{ 
+		this.overviewDom.show(); 
+
+		// Activate accordion after show to get correct height.
+		this.overviewDom.find('.accordion').accordion();
+		this.overviewDom.find('.accordion').accordion("option", "animated", "slide");
+		this.overviewDom.find('.accordion').accordion("option", "collapsible", true);
+		//$("#accordion").accordion({ icons: { 'header': 'ui-icon-plus', 
+		//			'headerSelected': 'ui-icon-minus' } });
+	};
+
 	this.hide = function() { this.overviewDom.hide(); };
 
 	/**

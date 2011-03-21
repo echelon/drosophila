@@ -91,27 +91,22 @@ h3 {
 
 /* OVERVIEW MODE */
 
-.p_generation {
-	background-color: #ffc;
+.overview_parents {
 	margin: 0px 0px 10px 0px;
-	padding: 10px;
+	padding: 0px;
 	text-align: center;
 }
 
-.p_generation h3 {
-	text-align: left;
-}
-
-.p_generation_male {
-	width: 320px;
+.overview_parents_male {
+	width: 290px;
 	float: left;
 	margin: 0px;
 	padding: 10px;
 	text-align: center;
 }
 
-.p_generation_female {
-	width: 320px;
+.overview_parents_female {
+	width: 290px;
 	margin: 0px;
 	padding: 10px;
 	float: left;
