@@ -8,6 +8,11 @@
 function History()
 {
 	/**
+	 * The initial parents.
+	 */
+	this.parents = {'m':0, 'f':0};
+	
+	/**
 	 * An array of all Generations, in order.
 	 */
 	this.all = [];
@@ -65,7 +70,6 @@ function History()
 		};
 		return null;
 	};
-
 
 	/**
 	 * Returns an array of the Alleles that are 'in use' throughout all

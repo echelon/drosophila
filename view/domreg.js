@@ -20,6 +20,7 @@ function DomReg()
 		if(DomReg._currentEl) {
 			DomReg._currentEl.hide();
 			DomReg._currentEl.detach();
+			delete DomReg._currentEl;
 		};
 		DomReg._currentEl = obj;
 		obj.setup();

@@ -76,6 +76,12 @@ function Reg(obj)
 		};
 		return traits;
 	};
+
+	/**
+	 * Return the history object.
+	 */
+	Reg.getHistory = function() { return Reg._history; };
+
 };
 
 

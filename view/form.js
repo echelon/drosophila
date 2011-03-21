@@ -4,6 +4,10 @@ function Form(genotype, sex)
 	this.genotype = genotype || null;
 	this.sex = sex || null;
 	this.isNew = (genotype)? false : true;
+
+	/**
+	 * DOM of the form.
+	 */
 	this.formDom = DomReg.getForm();
 	this.attached = false;
 	this.isSetup = false;
@@ -13,6 +17,11 @@ function Form(genotype, sex)
 	 */
 	this.selectedTrait = null;
 	this.selectedAllele = null;
+
+	/**
+	 * The alleles we've added.
+	 */
+	this.alleles = [];
 
 	/**
 	 * Simple present.
@@ -54,6 +63,14 @@ function Form(genotype, sex)
 		});
 		this.formDom.find('.allele').bind('change', function() { 
 				that.alleleSelected(); 
+		});
+		this.formDom.find('.designer_form_add_allele').bind('submit', function() {
+				that.onAlleleSubmit();
+				return false; // Prevents submit
+		});
+		this.formDom.find('.designer_form_complete').bind('submit', function() {
+				that.onCompleteSubmit();
+				return false; // Prevents submit
 		});
 
 		// Set title.
@@ -127,6 +144,18 @@ function Form(genotype, sex)
 	};
 
 	/**
+	 * Disable Allele selection. 
+	 */
+	this.disableAlleleSelect= function()
+	{
+		var options = "<option disabled=\"true\" selected=\"true\">Allele</option>"; 
+		var select = this.formDom.find('.allele')
+		select.empty()
+		select.html(options);
+		select.attr('disabled', 'disabled'); // disable
+	};
+
+	/**
 	 * CALLBACK
 	 * When a trait is selected, record it. Also enable allele 
 	 * selection.
@@ -162,11 +191,83 @@ function Form(genotype, sex)
 	};
 
 	/**
+	 * CALLBACK
+	 * When the form is submitted.
+	 */
+	this.onAlleleSubmit = function()
+	{
+		// Add allele
+		if(this.selectedAllele) {
+			var replaced = false;
+			for(var i = 0; i < this.alleles.length; i++) {
+				if(this.alleles[i].trait.abbr == this.selectedAllele.trait.abbr) {
+					this.alleles[i] = this.selectedAllele;
+					replaced = true;
+					break;
+				};
+			};
+			if(!replaced) {
+				this.alleles.push(this.selectedAllele);
+			}
+		}
+		this.resetForm();
+		this.updateFeed();
+	};
+
+	/**
+	 * CALLBACK
+	 * We're done creating. Make the genotype and exit.
+	 */
+	this.onCompleteSubmit = function()
+	{
+		var history = Reg.getHistory();
+		var overview = new Overview();
+
+		for(var i = 0; i < this.alleles.length; i++) {
+			this.genotype.setHomozygousFor(this.alleles[i]);
+		};
+
+		history.parents[this.genotype.getSex()] = this.genotype;
+
+		overview.present(); // XXX: This object is now distructed.
+	};
+	
+
+	/**
+	 * Reset the form to its default state.
+	 */
+	this.resetForm = function()
+	{
+		this.buildTraitSelect();
+		this.disableAlleleSelect();
+		this.disableSubmit();
+
+		this.selectedTrait = null;
+		this.selectedAllele = null;
+	};
+
+	/**
+	 * Update the "feed" of added alleles.
+	 */
+	this.updateFeed = function()
+	{
+		var text = "<ul>\n";
+		for(var i = this.alleles.length - 1; i >= 0; i--) {
+			var allele = this.alleles[i];
+			text += "<li>" + allele.trait.name + " &gt; <em>";
+			text += allele.name + "</em></li>\n";
+		};
+
+		text += "<li>All other traits are WT by default.</li>\n</ul>\n";
+		this.formDom.find('.designer_history_feed').html(text);
+	}
+
+	/**
 	 * Enable submit button.
 	 */
 	this.enableSubmit = function()
 	{
-		this.formDom.find('.submit').attr('disabled', '');
+		this.formDom.find('#designer_form_add_allele_submit').attr('disabled', '');
 	};
 
 	/**
@@ -174,7 +275,7 @@ function Form(genotype, sex)
 	 */
 	this.disableSubmit = function()
 	{
-		this.formDom.find('.submit').attr('disabled', 'disabled');
+		this.formDom.find('#designer_form_add_allele_submit').attr('disabled', 'disabled');
 	};
 
 	/**
@@ -182,7 +283,7 @@ function Form(genotype, sex)
 	 */
 	this.setImage = function()
 	{
-		var imgDiv = this.formDom.find('.img');
+		var imgDiv = this.formDom.find('.designer_img');
 		if(this.genotype.getSex() == 'm') {
 			imgDiv.html("<img src=\"./img/blue-grad.png\" />");
 		}

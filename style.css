@@ -4,7 +4,14 @@
 }
 
 a img { border: 0px; }
-a { color: #aaf; }
+a:link, a:visited { 
+	color: #d51; 
+	text-decoration: none;
+}
+a:hover, a:active {
+	color: #c00;
+	text-decoration: underline;
+}
 
 html, body {
 	height: 100%;
@@ -15,9 +22,9 @@ html, body {
 body {
 	margin: 0;
 	padding: 0;
-	background: #111;
-	color: #fff;
-	background-image: url("./img/bg-linear.gif");
+	background: #eee;
+	color: #000;
+	background-image: url("./img/bg-linear.png");
 	background-attachment: fixed;
 }
 
@@ -56,4 +63,22 @@ h3 {
 	margin: 0px 0px 5px 3px;
 	font-size: 1.2em;
 }
+
+
+/* Designer Specific */
+.designer_img {
+	float: right;
+	margin: 0px 50px 0px 0px;
+}
+
+.designer_other { }
+
+.designer_form_add_allele select { display: inline; }
+
+.designer_form_add_allele form {
+	display: inline;
+	margin: 0px;
+	padding: 0px;
+}
+
 

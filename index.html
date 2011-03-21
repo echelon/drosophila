@@ -68,20 +68,29 @@
 				<h3><a href="#" class="overview">main</a> &gt;
 					<span class="location">Description</span></h3>
 				<br />
-				<div class="img">Image Here</div>
-				<p> Set Trait:
-					<form class="form" action="#" method="get">
+
+				<div class="designer_img">Image Here</div>
+				<div class="designer_other">
+					<form class="designer_form_add_allele" action="#" method="get">
+						<strong>Set:</strong>
 						<select name="trait" class="trait" disabled="true">
 							<option value="none">Trait</option>
 						</select>
 						<select name="allele" class="allele" disabled="true">
 							<option value="none">Allele</option>
 						</select>
-						<input type="submit" class="submit" disabled="true" value="Add" />
+						<input type="submit" id="designer_form_add_allele_submit" 
+							disabled="true" value="Add" />
 					</form>
-				</p>
-				<div class="history">
-					<p class="history_default">All traits are WT.</p>
+					<div class="designer_history_feed">
+						<ul>
+							<li>All traits are WT by default.</li>
+						</ul>
+					</div>
+					<form class="designer_form_complete" action="#" method="get">
+						<input type="submit" class="designer_form_finish_submit" 
+							value="Create" />
+					</form>
 				</div>
 			</div>
 
