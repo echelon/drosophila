@@ -4,16 +4,17 @@
 		<script type="text/javascript" src="./lib/jquery.js"></script>
 		<script type="text/javascript" src="./model/allele.js"></script>
 		<script type="text/javascript" src="./model/trait.js"></script>
+		<script type="text/javascript" src="./model/history.js"></script>
 		<script type="text/javascript" src="./model/registry.js"></script>
 		<script type="text/javascript" src="./model/misc.js"></script>
 		<script type="text/javascript" src="./model/defs.js"></script>
 		<script type="text/javascript" src="./model/genotype.js"></script>
 		<script type="text/javascript" src="./model/phenotype.js"></script>
 		<script type="text/javascript" src="./model/generation.js"></script>
-		<script type="text/javascript" src="./view/history.js"></script>
 		<script type="text/javascript" src="./view/domreg.js"></script>
 		<script type="text/javascript" src="./view/form.js"></script>
 		<script type="text/javascript" src="./view/overview.js"></script>
+		<link type="text/css" rel="stylesheet" href="./style.css" />
 		<script type="text/javascript">
 
 			var HIST = new History();
@@ -31,12 +32,13 @@
 			$(document).ready(function() { test(); });
 
 		</script>
-		<style>
-			#ui_proto { display: none; }
-		</style>
 	</head>
 	<body>
-
+		<div id="container">
+			<div id="logo">
+				<h1>Open Source FlyLab Clone</h1>
+				<hr />
+			</div>
 		<!--
 			Main:
 			This is where the active GUI elements will show up.
@@ -54,7 +56,8 @@
 				Main overview 
 			-->
 			<div id="overview">
-				<a href="#" class="new">New</a>
+				<a href="#" class="new_male">new male</a>
+				<a href="#" class="new_female">new female</a>
 				<p>TODO TODO TODO</p>
 			</div>
 
@@ -62,18 +65,21 @@
 				Form for creating / editing genotypes.
 			-->
 			<div id="designer">
-				<a href="#" class="overview">main</a>
+				<h3><a href="#" class="overview">main</a> &gt;
+					<span class="location">Description</span></h3>
 				<br />
-				<img src="./img/blue-grad.png" />
-				<form class="form">
-					<select name="trait" disabled="true">
-						<option value="none">Trait</option>
-					</select>
-					<select name="allele" disabled="true">
-						<option value="none">Allele</option>
-					</select>
-					<input type="submit" disabled="true" value="Add" />
-				</form>
+				<div class="img">Image Here</div>
+				<p> Set Trait:
+					<form class="form" action="#" method="get">
+						<select name="trait" class="trait" disabled="true">
+							<option value="none">Trait</option>
+						</select>
+						<select name="allele" class="allele" disabled="true">
+							<option value="none">Allele</option>
+						</select>
+						<input type="submit" class="submit" disabled="true" value="Add" />
+					</form>
+				</p>
 				<div class="history">
 					<p class="history_default">All traits are WT.</p>
 				</div>
@@ -91,6 +97,7 @@
 				</ul>	
 			</div>
 
+		</div>
 		</div>
 
 	</body>

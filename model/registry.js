@@ -8,6 +8,7 @@ function Reg(obj)
 	if(typeof Reg._alleles == 'undefined') {
 		Reg._alleles = {};
 		Reg._traits = {};
+		Reg._history = new History();
 	};
 
 	if(obj instanceof Allele) {

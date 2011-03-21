@@ -33,8 +33,12 @@ function Overview()
 		this.isSetup = true;
 
 		// New individual callback.
-		this.overviewDom.find('.new').bind('click', function() { 
-				var form = new Form();
+		this.overviewDom.find('.new_male').bind('click', function() { 
+				var form = new Form(false, 'm');
+				form.present();
+		});
+		this.overviewDom.find('.new_female').bind('click', function() { 
+				var form = new Form(false, 'f');
 				form.present();
 		});
 	};
@@ -57,10 +61,11 @@ function Overview()
 	 */
 	this.detach = function()
 	{
+		var main = DomReg.getMain();
 		if(!this.attached) {
 			return;
 		};
-		// TODO
+		main.empty();
 		this.attached = false;
 	};
 
