@@ -7,6 +7,9 @@ function Overview()
 {
 	this.overviewDom = DomReg.overview();
 	this.attached = false;
+	
+	// Keep count of accordion sections
+	this.numSections = 0;
 
 	/**
 	 * Simple present.
@@ -25,10 +28,13 @@ function Overview()
 
 		// Activate accordion after show to get correct height.
 		this.overviewDom.find('.accordion').accordion();
-		this.overviewDom.find('.accordion').accordion("option", "animated", "slide");
-		this.overviewDom.find('.accordion').accordion("option", "collapsible", true);
-		//$("#accordion").accordion({ icons: { 'header': 'ui-icon-plus', 
-		//			'headerSelected': 'ui-icon-minus' } });
+		this.overviewDom.find('.accordion').accordion('option', 'animated', 'slide');
+		this.overviewDom.find('.accordion').accordion('option', 'collapsible', true);
+
+		// More options to help height...
+		this.overviewDom.find('.accordion').accordion('option', 'clearStyle', true);
+		//this.overviewDom.find('.accordion').accordion('option', 'active', false);
+		this.overviewDom.find('.accordion').accordion('option', 'active', (this.numSections-1));
 	};
 
 	/**
@@ -48,20 +54,46 @@ function Overview()
 
 		var generations = Reg.getHistory().generations;
 		var html = '';
+		var dom = null;
 
+		// Older generations
 		for(var i = 0; i < generations.length; i++)
 		{
 			var gen = generations[i];
-			var dom = DomReg.overviewParentsOld();
-			var maleDom = dom.find('.overview_parents_male');
-			var femaleDom = dom.find('.overview_parents_female');
+			var children = generations[i].children;
 
+			dom = DomReg.overviewParentsOld();
+
+			// Handle parents, title
 			dom.find('h3 a').html('Cross #' + (i+1));
-			maleDom.find('.status').html(gen.parents.m.getPhenotype().phenotypeString());
-			femaleDom.find('.status').html(gen.parents.f.getPhenotype().phenotypeString());
+			dom.find('.overview_parents_male').find('.status') 
+						.html(gen.parents.m.getPhenotype().phenotypeString());
+			dom.find('.overview_parents_female').find('.status')
+						.html(gen.parents.f.getPhenotype().phenotypeString());
+
+			// Handle children --  TODO: Poor interface.
+			var out = "<ul>\n";
+			for(var hash in children.indivs) {
+				var bin = children.indivs[hash];
+				out += "<li>";
+				out += bin.genotype.getPhenotype().phenotypeString();
+				out += " &mdash; ";
+				out += bin.count;
+				out += "</li>\n";
+			};
+			out += "</ul>";
+
+			dom.find('.overview_children_placeholder').html(out);
 
 			html += dom.html();
+			this.numSections++;
 		};
+
+		// New generation.
+		dom = DomReg.overviewParentsNew();
+		dom.find('h3 a').html('Next Cross (#' + (this.numSections+1) + ")");
+		html += dom.html();
+		this.numSections++;
 
 		this.overviewDom.find('.accordion').html(html);
 
@@ -77,35 +109,6 @@ function Overview()
 
 		// Update
 		this.updateParents();*/
-	};
-
-	/**
-	 * Update the parents in each section.
-	 * Image, text, etc.
-	 */
-	this.updateParents = function()
-	{
-		var parents = Reg.getHistory().parents;
-		var maleDom = this.overviewDom.find('.overview_parents_male');
-		var femaleDom = this.overviewDom.find('.overview_parents_female');
-
-		if(parents['m']) {
-			maleDom.find('.status').html(parents['m'].getPhenotype().phenotypeString());
-			maleDom.find('.new_link').hide();
-		}
-		else {
-			maleDom.find('.status').html('');
-			maleDom.find('.edit_link').hide();
-		};
-
-		if(parents['f']) {
-			femaleDom.find('.status').html(parents['f'].getPhenotype().phenotypeString());
-			femaleDom.find('.new_link').hide();
-		}
-		else {
-			femaleDom.find('.status').html('');
-			femaleDom.find('.edit_link').hide();
-		};
 	};
 
 	/**

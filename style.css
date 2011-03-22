@@ -91,8 +91,7 @@ h3 {
 
 /* OVERVIEW MODE */
 
-.overview_parents {
-	margin: 0px 0px 10px 0px;
+.overview_form_wrap {
 	padding: 0px;
 	text-align: center;
 }
@@ -113,31 +112,13 @@ h3 {
 	text-align: center;
 }
 
-.p_generation form, .p_generation input {
+.overview_form form, .overview_form input {
 	display: inline;
 }
 
-.f_generation_odd {
-	background-color: #fdd;
-	margin: 0px 0px 10px 0px;
-	padding: 10px
-}
-
-.f_generation_even {
-	background-color: #fcc;
-	margin: 0px 0px 10px 0px;
-	padding: 10px
-}
-
 .overview_cross {
-	background-color: #ffc;
-	margin: 0px 0px 10px 0px;
-	padding: 10px
-}
-
-.overview_results {
 	background-color: #fcc;
-	margin: 0px 0px 20px 0px;
+	margin: 0px 0px 10px 0px;
 	padding: 10px
 }
 

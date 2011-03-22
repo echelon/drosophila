@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>In Silico Genetics Lab</title>
+		<title>Open Source FlyLab Clone</title>
 		<script type="text/javascript" src="./lib/jquery.js"></script>
 		<script type="text/javascript" src="./lib/jquery-ui.js"></script>
 		<script type="text/javascript" src="./model/allele.js"></script>
@@ -24,17 +24,33 @@
 
 				var male = new Genotype();
 				male.setSex('m');
-				male.setHomozygousFor('F');
+				male.setHomozygousFor('E');
 				Reg.getHistory().curParents['m'] = male;
 
 				var female = new Genotype();
 				female.setSex('f');
-				female.setHomozygousFor('E');
-				female.setHomozygousFor('PR');
 				Reg.getHistory().curParents['f'] = female;
 
 				var f1 = male.recombine(female);
 				Reg.getHistory().saveGeneration(f1);
+
+				<!-- Second gen -->
+
+				var male2 = new Genotype();
+				male2.setSex('m');
+				male2.setHomozygousFor('SV');
+				male2.setHomozygousFor('D');
+				male2.setHomozygousFor('SN');
+				Reg.getHistory().curParents['m'] = male2;
+
+				var female2 = new Genotype();
+				female2.setSex('f');
+				female2.setHomozygousFor('Y');
+				Reg.getHistory().curParents['f'] = female2;
+
+				var f2 = male2.recombine(female2);
+				Reg.getHistory().saveGeneration(f2);
+
 
 				overview = new Overview();
 				overview.present();
@@ -101,6 +117,10 @@
 		</span>
 	</div>
 	<div class="clear"></div>
+	<div class="overview_cross">
+		<h3>Generation #</h3>
+		<div class="overview_children_placeholder"></div>
+	</div>
 	</div>
 </div>
 
@@ -108,6 +128,8 @@
 	<!-- Parents Part : NEW -->
 
 <div class="overview_parents_new">
+	<h3><a href="#">Cross Number</a></h3>
+	<div>
 	<div class="overview_parents_male">
 		<img src="./img/blue-grad.png" width="150" height="125" />
 		<span class="links">
@@ -125,9 +147,12 @@
 		</span>
 	</div>
 	<div class="clear"></div>
-	<form class="overview_form_p_generation" action="#" method="get">
-		<input type="submit" value="Breed" />
-	</form>
+	<div class="overview_form_wrap">
+		<form class="overview_form" action="#" method="get">
+			<input type="submit" value="Cross" />
+		</form>
+	</div>
+	</div>
 </div>
 
 

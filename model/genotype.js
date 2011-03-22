@@ -310,7 +310,7 @@ function Genotype()
 		var traits = traitUnion(this, genotype);	
 
 		if(typeof number == 'undefined') {
-			number = 10 // TODO: Poor default choice
+			number = 1000 // TODO: Poor default choice
 		};
 
 		//number += vary;
