@@ -5,7 +5,7 @@
 function DomReg()
 {
 	if(typeof DomReg._elements == 'undefined') {
-		DomReg._elements = $("#ui_proto").detach();
+		DomReg._elements = $("#hidden_cloneable").detach();
 		DomReg._main = $("#main");
 		DomReg._currentEl = null;
 	};
@@ -31,27 +31,22 @@ function DomReg()
 	/**
 	 * Access the main div
 	 */
-	DomReg.getMain = function()
-	{
-		return DomReg._main;
-	};
+	DomReg.getMain = function() { return DomReg._main; };
 
 	/**
-	 * Get an overview DOM tree.
+	 * Get the appropriate part of the DOM tree.
 	 */
-	DomReg.getOverview = function()
-	{
-		var overview = DomReg._elements.find("#overview").clone();
-		return overview;
-	};
+	DomReg.overview = function() { return DomReg._clone(".overview"); };
+	DomReg.overviewParentsNew = function() { return DomReg._clone(".overview_parents_new"); };
+	DomReg.overviewParentsOld = function() { return DomReg._clone(".overview_parents_old"); };
+	DomReg.getDesigner = function() { return DomReg._clone(".designer"); };
 
 	/**
-	 * Get a form DOM tree.
+	 * Clone the named DOM section.
 	 */
-	DomReg.getForm = function()
+	DomReg._clone = function(name)
 	{
-		var form = DomReg._elements.find("#designer").clone();
-		return form;
+		return DomReg._elements.find( name ).clone();
 	};
 };
 

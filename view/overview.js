@@ -5,7 +5,7 @@
  */
 function Overview()
 {
-	this.overviewDom = DomReg.getOverview();
+	this.overviewDom = DomReg.overview();
 	this.attached = false;
 
 	/**
@@ -46,7 +46,26 @@ function Overview()
 		}
 		this.isSetup = true;
 
-		// New individual callback.
+		var generations = Reg.getHistory().generations;
+		var html = '';
+
+		for(var i = 0; i < generations.length; i++)
+		{
+			var gen = generations[i];
+			var dom = DomReg.overviewParentsOld();
+			var maleDom = dom.find('.overview_parents_male');
+			var femaleDom = dom.find('.overview_parents_female');
+
+			dom.find('h3 a').html('Cross #' + (i+1));
+			maleDom.find('.status').html(gen.parents.m.getPhenotype().phenotypeString());
+			femaleDom.find('.status').html(gen.parents.f.getPhenotype().phenotypeString());
+
+			html += dom.html();
+		};
+
+		this.overviewDom.find('.accordion').html(html);
+
+		/*// New individual callback.
 		this.overviewDom.find('.new_male').bind('click', function() { 
 				var form = new Form(false, 'm');
 				form.present();
@@ -57,7 +76,7 @@ function Overview()
 		});
 
 		// Update
-		this.updateParents();
+		this.updateParents();*/
 	};
 
 	/**

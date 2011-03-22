@@ -1,27 +1,59 @@
 
 /**
- * TODO: Rename to GenerationHistory, GenerationRegistry...
- * Maybe just 'History'.
  * TODO: Should build a cache of alleles and traits used so that 
  * expensive lookup is not necessary.
  */
 function History()
 {
 	/**
-	 * The initial parents.
+	 * The current generation that is being built.
 	 */
-	this.parents = {'m':0, 'f':0};
-	
+	this.curGeneration = 0;
+
 	/**
-	 * An array of all Generations, in order.
+	 * The parents of the current (upcoming) generation.
+	 * mGen and fGen are pointers to the generation of the parent. If
+	 * negative, they are P generation.
 	 */
-	this.all = [];
+	this.curParents = {
+		m: 0, 
+		f: 0,
+		mGen: -1, // TODO
+		fGen: -1  // TODO
+	};
+
+	/**
+	 * All created (historal) generations, for reference.
+	 * - parents: m, f, mGen, fGen
+	 * - children: <Generation>
+	 */
+	this.generations = [];
 
 	/**
 	 * Push a new generation on the list.
 	 */
-	this.push = function(gen) {
-		this.all.push(gen);
+	this.saveGeneration = function(gen) 
+	{
+		if(!gen) {
+			return;
+		};
+
+		var parents = {
+			m: this.curParents['m'],
+			f: this.curParents['f'],
+			mGen: this.curParents['mGen'], // TODO
+			fGen: this.curParents['fGen']  // TODO
+		}
+		
+		this.generations.push({parents:parents, children:gen});
+
+		this.curGeneration++;
+		this.curParents = {
+				m: 0,
+				f: 0,
+				mGen: -1,
+				fGen: -1
+		};
 	};
 
 	/**

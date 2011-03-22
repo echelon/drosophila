@@ -22,16 +22,19 @@
 			function test() {
 				DomReg();
 
-				/*var male = new Genotype();
+				var male = new Genotype();
 				male.setSex('m');
 				male.setHomozygousFor('F');
-				Reg.getHistory().parents['m'] = male;
+				Reg.getHistory().curParents['m'] = male;
 
 				var female = new Genotype();
 				female.setSex('f');
 				female.setHomozygousFor('E');
 				female.setHomozygousFor('PR');
-				Reg.getHistory().parents['f'] = female;*/
+				Reg.getHistory().curParents['f'] = female;
+
+				var f1 = male.recombine(female);
+				Reg.getHistory().saveGeneration(f1);
 
 				overview = new Overview();
 				overview.present();
@@ -47,117 +50,130 @@
 				<h1>Open Source FlyLab Clone</h1>
 				<hr />
 			</div>
-		<!--
-			Main:
-			This is where the active GUI elements will show up.
-		-->
-		<div id="main">
+			<!-- Main: This is where the active GUI elements will show up. -->
+			<div id="main"></div>
 		</div>
 
-		<!--
-			UI Prototype:
-			Hidden GUI elements that will be cloned and manipulated.
-		-->
-		<div id="ui_proto">
+<!--
+	UI Prototype:
+	Hidden GUI elements that will be cloned and manipulated.
+-->
+<div id="hidden_cloneable">
 
-			<!-- 
-				Main overview 
-			-->
-			<div id="overview">
+	<!-- Main overview -->
 
-				<div class="accordion">
-					<h3><a href="#">Cross #1</a></h3>
-					<div>
-						<div class="overview_parents">
-							<div class="overview_parents_male">
-								<img src="./img/blue-grad.png" width="150" height="125" />
-								<span class="links">
-									<p class="status">Status Here</p>
-									<p class="new_link"><a href="#" class="new_male">Design male</a></p>
-									<p class="edit_link"><a href="#" class="edit_male">Edit</a></p>
-								</span>
-							</div>
-							<div class="overview_parents_female">
-								<img src="./img/red-grad.png" width="150" height="125" />
-								<span class="links">
-									<p class="status">Status Here</p>
-									<p class="new_link"><a href="#" class="new_female">Design female</a></p>
-									<p class="edit_link"><a href="#" class="edit_female">Edit</a></p>
-								</span>
-							</div>
-							<div class="clear"></div>
-
-							<form class="overview_form_p_generation" action="#" method="get">
-								<input type="submit" value="Breed" />
-							</form>
-						</div>
-
-						<div class="overview_results">
-							<h3>Results: F1 Generation</h3>
-							Pending...
-						</div>
-
-					</div>
-
-					<h3><a href="#">Cross #2</a></h3>
-					<div>Second content</div>
-				</div>
+<div class="overview">
+	<div class="accordion">
+		<h3><a href="#">Cross Number</a></h3>
+		<div>Contents</div>
+	</div>
+	<div id="todo">
+		<p>This constitutes notes concerning the code.</p>
+		<ul>
+			<li>Work on "Overview" mode now.</li>
+			<li>Generations will be "Tabs" that are navigable.</li>
+			<li>"Create fly" dialog/controls.</li>
+			<li>"Mate" dialog, which allows the user to pick a pair of flies to mate.</li>
+		</ul>	
+	</div>
+</div>
 
 
-				<div id="todo">
-					<p>This constitutes notes concerning the code.</p>
-					<ul>
-						<li>Work on "Overview" mode now.</li>
-						<li>Generations will be "Tabs" that are navigable.</li>
-						<li>"Create fly" dialog/controls.</li>
-						<li>"Mate" dialog, which allows the user to pick a pair of flies to mate.</li>
-					</ul>	
-				</div>
+	<!-- Parents Part : OLD -->
+	
+<div class="overview_parents_old">
+	<h3><a href="#">Cross Number</a></h3>
+	<div>
+	<div class="overview_parents_male">
+		<img src="./img/blue-grad.png" width="150" height="125" />
+		<span class="links">
+			<p class="status">Status Here</p>
+			<!-- TODO: View. -->
+			<!--<p class="view_link"><a href="#" class="view_male">View</a></p>-->
+		</span>
+	</div>
+	<div class="overview_parents_female">
+		<img src="./img/red-grad.png" width="150" height="125" />
+		<span class="links">
+			<p class="status">Status Here</p>
+			<!-- TODO: View. -->
+			<!--<p class="view_link"><a href="#" class="view_female">View</a></p>-->
+		</span>
+	</div>
+	<div class="clear"></div>
+	</div>
+</div>
 
-			</div>
 
-			<!-- 
-				Form for creating / editing genotypes.
-			-->
-			<div id="designer">
-				<h3><a href="#" class="overview">main</a> &gt;
-					<span class="location">Description</span></h3>
-				<br />
+	<!-- Parents Part : NEW -->
 
-				<div class="designer_img_div">
-					<div class="designer_img">Image Here</div>
-					<p class="designer_img_subtitle">Phenotype Here</p>
-				</div>
-				<div class="designer_other">
-					<form class="designer_form_add_allele" action="#" method="get">
-						<strong>Set:</strong>
-						<select name="trait" class="trait" disabled="true">
-							<option value="none">Trait</option>
-						</select>
-						<select name="allele" class="allele" disabled="true">
-							<option value="none">Allele</option>
-						</select>
-						<input type="submit" id="designer_form_add_allele_submit" 
-							disabled="true" value="Add" />
-					</form>
-					<div class="designer_history_feed">
-						<ul>
-							<li>All traits are WT by default.</li>
-						</ul>
-					</div>
-					<form class="designer_form_complete" action="#" method="get">
-						<input type="submit" class="designer_form_finish_submit" 
-							value="Create" />
-					</form>
-				</div>
-			</div>
+<div class="overview_parents_new">
+	<div class="overview_parents_male">
+		<img src="./img/blue-grad.png" width="150" height="125" />
+		<span class="links">
+			<p class="status">Status Here</p>
+			<p class="new_link"><a href="#" class="new_male">Design male</a></p>
+			<p class="edit_link"><a href="#" class="edit_male">Edit</a></p>
+		</span>
+	</div>
+	<div class="overview_parents_female">
+		<img src="./img/red-grad.png" width="150" height="125" />
+		<span class="links">
+			<p class="status">Status Here</p>
+			<p class="new_link"><a href="#" class="new_female">Design female</a></p>
+			<p class="edit_link"><a href="#" class="edit_female">Edit</a></p>
+		</span>
+	</div>
+	<div class="clear"></div>
+	<form class="overview_form_p_generation" action="#" method="get">
+		<input type="submit" value="Breed" />
+	</form>
+</div>
 
-			<!-- 
-				Notes to self concerning code, progress, etc. 
-			-->
-			
+
+	<!-- Children -->
+
+<div class="overview_children">
+	<h3>Results: F1 Generation</h3>
+	Pending...
+</div>
+
+
+	<!-- Form for creating / editing genotypes. -->
+
+<div class="designer">
+	<h3><a href="#" class="overview">main</a> &gt;
+		<span class="location">Description</span></h3>
+	<br />
+	<div class="designer_img_div">
+		<div class="designer_img">Image Here</div>
+		<p class="designer_img_subtitle">Phenotype Here</p>
+	</div>
+	<div class="designer_other">
+		<form class="designer_form_add_allele" action="#" method="get">
+			<strong>Set:</strong>
+			<select name="trait" class="trait" disabled="true">
+				<option value="none">Trait</option>
+			</select>
+			<select name="allele" class="allele" disabled="true">
+				<option value="none">Allele</option>
+			</select>
+			<input type="submit" id="designer_form_add_allele_submit" 
+					disabled="true" value="Add" />
+		</form>
+		<div class="designer_history_feed">
+			<ul>
+				<li>All traits are WT by default.</li>
+			</ul>
 		</div>
-		</div>
+		<form class="designer_form_complete" action="#" method="get">
+			<input type="submit" class="designer_form_finish_submit" 
+					value="Create" />
+		</form>
+	</div>
+</div>
 
+<!-- END -->
+		</div>
 	</body>
 </html>
