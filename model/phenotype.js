@@ -84,7 +84,7 @@ function Phenotype(genotype)
 	 * Phenotype String
 	 * Nicely formatted output string used in HTML output. 
 	 */
-	this.phenotypeString = function()
+	this.phenotypeWithoutSexString = function()
 	{
 		var ret = '';
 
@@ -102,9 +102,9 @@ function Phenotype(genotype)
 	 * Phenotype & Sex String.
 	 * Nicely formatted output string used in HTML output. 
 	 */
-	this.phenotypeSexString = function()
+	this.phenotypeString = function()
 	{
-		return this.phenotypeString() + ' ('+ this.getSexStr() + ')';
+		return this.phenotypeWithoutSexString() + ' ('+ this.getSexStr() + ')';
 	};
 
 	/**

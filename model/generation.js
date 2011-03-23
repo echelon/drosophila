@@ -47,7 +47,6 @@ function Generation(indivs)
 	this.phenotypeMap = function()
 	{
 		var phenMap = {};
-		var phenMap2 = {};
 
 		for(var h in this.indivs) {
 			var geno = this.indivs[h];
@@ -61,11 +60,7 @@ function Generation(indivs)
 			};
 		};
 
-		// Strictly phenotype -> count.
-		for(var h in phenMap) {
-			phenMap2[phenMap[h].phenotype] = phenMap[h].count;
-		}
-		return phenMap2;
+		return phenMap;
 	};
 
 	/**
@@ -75,7 +70,6 @@ function Generation(indivs)
 	this.phenotypeWithoutSexMap = function()
 	{
 		var phenMap = {};
-		var phenMap2 = {};
 
 		for(var h in this.indivs) {
 			var geno = this.indivs[h];
@@ -89,11 +83,7 @@ function Generation(indivs)
 			};
 		};
 
-		// Strictly phenotype -> count.
-		for(var h in phenMap) {
-			phenMap2[phenMap[h].phenotype] = phenMap[h].count;
-		}
-		return phenMap2;
+		return phenMap;
 	};
 };
 

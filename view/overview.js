@@ -72,16 +72,28 @@ function Overview()
 						.html(gen.parents.f.getPhenotype().phenotypeString());
 
 			// Handle children --  TODO: Poor interface.
+			var phenMap = children.phenotypeMap();
 			var out = "<ul>\n";
-			for(var hash in children.indivs) {
-				var bin = children.indivs[hash];
+			for(var hash in phenMap) {
 				out += "<li>";
-				out += bin.genotype.getPhenotype().phenotypeString();
+				out += phenMap[hash].phenotype.phenotypeString();
 				out += " &mdash; ";
-				out += bin.count;
+				out += phenMap[hash].count;
+				out += "</li>\n";
+			};
+			out += "</ul>\n";
+
+			phenMap = children.phenotypeWithoutSexMap();
+			out += "<ul>\n";
+			for(var hash in phenMap) {
+				out += "<li>";
+				out += phenMap[hash].phenotype.phenotypeWithoutSexString();
+				out += " &mdash; ";
+				out += phenMap[hash].count;
 				out += "</li>\n";
 			};
 			out += "</ul>";
+
 
 			dom.find('.overview_children_placeholder').html(out);
 
