@@ -1,4 +1,10 @@
 
+/**
+ * Container data structure for a "generation" of offspring produced in
+ * a cross. Does not maintain all individuals, but rather a single copy
+ * of each observed genotype--and the number of times that genotype
+ * appears.
+ */
 function Generation(indivs)
 {
 	this.indivs = {};

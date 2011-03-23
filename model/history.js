@@ -1,7 +1,8 @@
 
 /**
- * TODO: Should build a cache of alleles and traits used so that 
- * expensive lookup is not necessary.
+ * History
+ * Maintains a record of alleles used, parents crossed, and generations
+ * made. Centralized history management. 
  */
 function History()
 {
