@@ -49,8 +49,7 @@ function Phenotype(genotype)
 	};
 
 	/**
-	 * Returns the number of traits that the Phenotype has dominant,
-	 * non-wildtype expression for.
+	 * Returns the number of traits (non-WT) present in the phenotype.
 	 */
 	this.numTraits = function() 
 	{
@@ -62,7 +61,8 @@ function Phenotype(genotype)
 	};
 
 	/**
-	 * String representation of the Phenotype.
+	 * String representation of the Phenotype. 
+	 * Used in debugging.
 	 */
 	this.toString = function()
 	{
@@ -81,24 +81,62 @@ function Phenotype(genotype)
 	};
 
 	/**
-	 * Nicely formatted output string.
-	 * Used in HTML output. 
+	 * Phenotype String
+	 * Nicely formatted output string used in HTML output. 
 	 */
 	this.phenotypeString = function()
 	{
 		var ret = '';
 
 		if(this.numTraits() == 0) {
-			return 'WT (' + this.getSexStr() + ')';
+			return 'WT';
 		};
+
 		for(var abbr in this.genes) {
 			ret += this.genes[abbr].code + ", ";
 		};
+		return ret.substr(0, ret.length - 2);
+	};
 
-		ret = ret.substr(0, ret.length - 2);
-		ret += ' (' + this.getSexStr() + ')';
-		return ret; 
+	/**
+	 * Phenotype & Sex String.
+	 * Nicely formatted output string used in HTML output. 
+	 */
+	this.phenotypeSexString = function()
+	{
+		return this.phenotypeString() + ' ('+ this.getSexStr() + ')';
+	};
 
+	/**
+	 * A hash map function for the Phenotype.
+	 * In the format 'sex/allele/allele/allele...' where the alleles
+	 * are sorted alphabetically. 
+	 */
+	this.hash = function()
+	{
+		return this.sex + '/' + this.hashWithoutSex();
+	};
+
+	/**
+	 * A hash map function for the Phenotype.
+	 * In the format 'allele/allele/allele...' where the alleles
+	 * are sorted alphabetically. 
+	 */
+
+	this.hashWithoutSex = function()
+	{
+		var alleleAbbrs = [];
+		var str = '';
+
+		for(var abbr in this.genes) {
+			var al = this.genes[abbr];
+			alleleAbbrs.push(al.code);	
+		};
+
+		for(var i = 0; i < alleleAbbrs.length; i++) {
+			str+= alleleAbbrs[i] + '/';
+		};
+		return str;
 	};
 
 	/**
