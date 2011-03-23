@@ -81,7 +81,8 @@ function Phenotype(genotype)
 	};
 
 	/**
-	 * Output string.
+	 * Nicely formatted output string.
+	 * Used in HTML output. 
 	 */
 	this.phenotypeString = function()
 	{
@@ -98,10 +99,27 @@ function Phenotype(genotype)
 		ret += ' (' + this.getSexStr() + ')';
 		return ret; 
 
-	}
-	
-	this.equals = function(pheno) {
-		// TODO
 	};
 
+	/**
+	 * Determine if a phenotype matches another one.
+	 */
+	this.equals = function(pheno) 
+	{
+		if(this.sex != pheno.sex) {
+			return false;
+		};
+
+		if(this.numTraits() != pheno.numTraits()) {
+			return false;
+		};
+
+		for(var abbr in this.genes) {
+			if(!pheno[abbr]) {
+				return false;
+			};
+		};
+		return true;
+	};
 };
+

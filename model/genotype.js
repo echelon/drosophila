@@ -15,8 +15,10 @@ function Genotype()
 
 	this.sex = 'f'; // TODO: Read straight from genome? 
 
-	/*******************************************/
 
+	/**
+	 * Get the sex (m or f).
+	 */
 	this.getSex = function() { return this.sex; };
 
 	/**
@@ -29,9 +31,22 @@ function Genotype()
 		return 'male';
 	};
 
-	this.setSex = function(sex) {
-		assert(this.sex in {'m': 1, 'M': 1, 'f': 1, 'F': 1}, 'Wrong sex.');
-		this.sex = sex.toLowerCase();
+	/**
+	 * Set the sex.
+	 */
+	this.setSex = function(sex)
+	{
+		sex = sex.toLowerCase();
+		switch(sex) {
+			case 'm':
+			case 'male':
+				this.sex = 'm';
+				return;
+			case 'f':
+			case 'female':
+				this.sex = 'f';
+				return;
+		};
 	};
 
 	/**
@@ -52,6 +67,23 @@ function Genotype()
 			cnt++;
 		};
 		return cnt;
+	};
+
+	/**
+	 * For any trait a non-WT allele is selected, return it in a map of
+	 * {traitAbbr:allele}.
+	 */
+	this.traitAlleleMap = function()
+	{
+		var map = {};
+
+		for(var abbr in this.genes) {
+			var tr = this.genes[abbr];
+			if(tr.length >= 1) {
+				map[abbr] = tr[0];
+			};
+		};
+		return map;
 	};
 
 	/**
@@ -81,8 +113,10 @@ function Genotype()
 	};
 
 	/**
-	 * TODO: TEMPORARY.
-	 * A hash function for the Genotype.
+	 * A hash map function for the Genotype.
+	 * In the format 'sex/allele/allele/allele...' where the alleles
+	 * are sorted alphabetically and the allele copy numbers is 
+	 * represented. 
 	 */
 	this.hash = function()
 	{
@@ -155,6 +189,7 @@ function Genotype()
 
 	/**
 	 * Whether the Genotype is a valid one.  
+	 * eg. Lethal X-linked males are invalid.
 	 */
 	this.valid = function()
 	{

@@ -1,7 +1,7 @@
 
 /**
  * Registry to maintain Trait and Allele maps.
- *  A static class.
+ * A static class. See usage in defs.js.
  */
 function Reg(obj)
 {

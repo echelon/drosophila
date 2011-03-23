@@ -30,11 +30,35 @@ function History()
 	this.generations = [];
 
 	/**
+	 * Map of historical data for the user's choice in allele for any
+	 * trait that has been selected. Maintaining this list makes 
+	 * emulating classical Flylab easier, as the user is only able to
+	 * choose ONE ALLELE PER TRAIT for an ENTIRE simulation. 
+	 * Takes the form of {traitAbbr: allele}.
+	 */
+	this.traitAlleleMap = {};
+
+	/**
+	 * Reset the history! 
+	 * Allows for a future simulation to be run: TODO
+	 */
+	this.reset = function()
+	{
+		this.curGeneration = 0;
+		this.curParents = { m: 0, f: 0, mGen: -1, fGen: -1 };
+		this.generations = [];
+		this.traitAlleleMap = {};
+	};
+
+	/**
 	 * Push a new generation on the list.
+	 * This is critical to save history state info. 
 	 */
 	this.saveGeneration = function(gen) 
 	{
-		if(!gen) {
+		var traitMap = {};
+
+		if(!gen || !this.curParents.m || !this.curParents.f) {
 			return;
 		};
 
@@ -47,6 +71,24 @@ function History()
 		
 		this.generations.push({parents:parents, children:gen});
 
+		// Save the alleles and traits selected
+		traitMap = this.curParents.m.traitAlleleMap();
+		for(var abbr in traitMap) {
+			if(this.traitAlleleMap[abbr]) {
+				continue;
+			};
+			this.traitAlleleMap[abbr] = traitMap[abbr];
+		};
+
+		traitMap = this.curParents.f.traitAlleleMap();
+		for(var abbr in traitMap) {
+			if(this.traitAlleleMap[abbr]) {
+				continue;
+			};
+			this.traitAlleleMap[abbr] = traitMap[abbr];
+		};
+		
+		// Clear 'current' state.
 		this.curGeneration++;
 		this.curParents = {
 				m: 0,
@@ -57,85 +99,42 @@ function History()
 	};
 
 	/**
+	 * Get the parents of a generation, by id.
+	 */
+	this.getParentsOfGeneration = function(genNumber)
+	{
+		if(genNumber >= this.generations.length) {
+			return null;
+		};
+
+		return this.generations[genNumber].parents;
+	};
+
+	/**
+	 * Get the father of a generation directly.
+	 */
+	this.getFatherOfGeneration = function(genNumber) { 
+		return this.getParentsOfGeneration().m || null;
+	};
+
+	/**
+	 * Get the mother of a generation directly.
+	 */
+	this.getMotherOfGeneration = function(genNumber) { 
+		return this.getParentsOfGeneration().f || null;
+	};
+
+	/**
 	 * Returns an array of the Traits that are 'in use' throughout all
-	 * generations.
-	 * TODO: BAD CODE THAT RELIES ON MORE BAD CODE (FIXME)
+	 * generations. Essential for FlyLab emulation.
 	 */
 	this.usedTraits = function()
 	{
-		var traitsMap = {};
 		var traits = [];
-
-		for(var i = 0; i < this.all.length; i++) {
-			var indivs = this.all[i].indivs;
-			for(var indiv in indivs) {
-				var genes = indivs[indiv].genotype.genes
-				for(var abbr in genes) {
-					traitsMap[abbr] = 1;
-				};
-			}
-		};
-		for(abbr in traitsMap) {
+		for(var abbr in this.traitAlleleMap) {
 			traits.push(Reg.getTrait(abbr));
-		}
+		};
 		return traits;
-	};
-
-	/**
-	 * Returns the single Allele used for a Trait, or null.
-	 */
-	this.usedTraitAllele = function(trait)
-	{
-		var usedAlleles = [];
-
-		// TODO: Bad
-		if(!(trait instanceof Trait)) {
-			trait = Reg.getTrait(trait);
-		}
-	
-		usedAlleles = this.usedAlleles();
-		for(var i = 0; i < usedAlleles.length; i++) {
-			var allele = usedAlleles[i];
-			if(allele.trait.abbr == trait.abbr) {
-				return allele;
-			};
-		};
-		return null;
-	};
-
-	/**
-	 * Returns an array of the Alleles that are 'in use' throughout all
-	 * generations. 
-	 * XXX: This follows flylab -- only one allele may be used for any
-	 * given trait.
-	 * TODO: BAD CODE THAT RELIES ON MORE BAD CODE. THE WORST CODE IN 
-	 * THIS CLASS!! TERRIBLE. FIXME.
-	 */
-	this.usedAlleles = function()
-	{
-		var traitsMap = {};
-		var alleles = [];
-
-		for(var i = 0; i < this.all.length; i++) {
-			var indivs = this.all[i].indivs;
-			for(var indiv in indivs) {
-				var genes = indivs[indiv].genotype.genes
-				for(var abbr in genes) {
-					var g = genes[abbr];
-					if(g[0]) {
-						traitsMap[abbr] = g[0];
-					}
-					else if(g[1]) {
-						traitsMap[abbr] = g[1];
-					};
-				};
-			}
-		};
-
-		for(abbr in traitsMap) {
-			alleles.push(traitsMap[abbr]);
-		}
-		return alleles;
 	};
 
 	/**
@@ -161,6 +160,35 @@ function History()
 			};
 		};
 		return unusedTraits;
+	};
+
+	/**
+	 * Returns the single Allele used for a Trait, or null.
+	 */
+	this.usedTraitAllele = function(trait)
+	{
+		if(trait instanceof Trait) {
+			trait = trait.abbr;
+		};
+
+		if(this.traitAlleleMap[trait]) {
+			return this.traitAlleleMap[trait];
+		};
+		return null;
+	};
+
+	/**
+	 * Returns an array of the Alleles that are 'in use' throughout all
+	 * generations. 
+	 */
+	this.usedAlleles = function()
+	{
+		var alleles = [];
+
+		for(var abbr in this.traitAlleleMap) {
+			alleles.push(this.traitAlleleMap[abbr]);
+		};
+		return alleles;
 	};
 };
 
