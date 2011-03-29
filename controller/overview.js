@@ -20,30 +20,8 @@ function Overview()
 	};
 
 	/**
-	 * Show DOM 
-	 */
-	this.show = function() 
-	{ 
-		this.overviewDom.show(); 
-
-		// Activate accordion after show to get correct height.
-		this.overviewDom.find('.accordion').accordion();
-		this.overviewDom.find('.accordion').accordion('option', 'animated', 'slide');
-		this.overviewDom.find('.accordion').accordion('option', 'collapsible', true);
-
-		// More options to help height...
-		this.overviewDom.find('.accordion').accordion('option', 'clearStyle', true);
-		//this.overviewDom.find('.accordion').accordion('option', 'active', false);
-		this.overviewDom.find('.accordion').accordion('option', 'active', (this.numSections-1));
-	};
-
-	/**
-	 * Hide DOM
-	 */
-	this.hide = function() { this.overviewDom.hide(); };
-
-	/**
 	 * Setup.
+	 * First initialization, before Attachment or Show().
 	 */
 	this.setup = function()
 	{
@@ -135,6 +113,30 @@ function Overview()
 		main.append(this.overviewDom)		
 		this.attached = true;
 	};
+
+	/**
+	 * Show DOM 
+	 * Happens after 'Setup' and 'Attach'.
+	 */
+	this.show = function() 
+	{ 
+		this.overviewDom.show(); 
+
+		// Activate accordion after show to get correct height.
+		this.overviewDom.find('.accordion').accordion();
+		this.overviewDom.find('.accordion').accordion('option', 'animated', 'slide');
+		this.overviewDom.find('.accordion').accordion('option', 'collapsible', true);
+
+		// More options to help height...
+		this.overviewDom.find('.accordion').accordion('option', 'clearStyle', true);
+		//this.overviewDom.find('.accordion').accordion('option', 'active', false);
+		this.overviewDom.find('.accordion').accordion('option', 'active', (this.numSections-1));
+	};
+
+	/**
+	 * Hide DOM
+	 */
+	this.hide = function() { this.overviewDom.hide(); };
 
 	/**
 	 * Detach from main.

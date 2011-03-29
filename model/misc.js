@@ -21,7 +21,7 @@ function assert(stmt, msg)
 		if(typeof(msg) == 'undefined') {
 			msg = 'Undocumented Assert Failed.';
 		};
-		alert(msg);
+		alert('Assert Fail' + msg);
 		throw new Error(msg);
 	};
 };

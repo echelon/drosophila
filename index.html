@@ -3,6 +3,7 @@
 		<title>Open Source FlyLab Clone</title>
 		<script type="text/javascript" src="./lib/jquery.js"></script>
 		<script type="text/javascript" src="./lib/jquery-ui.js"></script>
+		<script type="text/javascript" src="./lib/jquery.tmpl.js"></script>
 		<script type="text/javascript" src="./model/allele.js"></script>
 		<script type="text/javascript" src="./model/trait.js"></script>
 		<script type="text/javascript" src="./model/history.js"></script>
@@ -19,10 +20,14 @@
 		<link type="text/css" rel="stylesheet" href="./style.css" />
 		<script type="text/javascript">
 
+			function runTemplate(data) {
+				$.template('testTemplate', data);
+				$.tmpl('testTemplate', {title:'test'}).appendTo('#main');
+			};
+
 			function test() {
 				DomReg();
 
-				
 				// XXX: Work with pregenerated data
 				/*var male = new Genotype();
 				male.setSex('m');
@@ -54,8 +59,6 @@
 				Reg.getHistory().saveGeneration(f2);
 				//*/
 
-				overview = new Overview();
-				overview.present();
 			};
 
 			$(document).ready(function() { test(); });
