@@ -12,9 +12,9 @@
 		<script type="text/javascript" src="./model/genotype.js"></script>
 		<script type="text/javascript" src="./model/phenotype.js"></script>
 		<script type="text/javascript" src="./model/generation.js"></script>
-		<script type="text/javascript" src="./view/domreg.js"></script>
-		<script type="text/javascript" src="./view/form.js"></script>
-		<script type="text/javascript" src="./view/overview.js"></script>
+		<script type="text/javascript" src="./controller/domreg.js"></script>
+		<script type="text/javascript" src="./controller/form.js"></script>
+		<script type="text/javascript" src="./controller/overview.js"></script>
 		<link type="text/css" rel="stylesheet" href="./lib/css/smoothness/jquery-ui.css" />
 		<link type="text/css" rel="stylesheet" href="./style.css" />
 		<script type="text/javascript">
@@ -22,7 +22,9 @@
 			function test() {
 				DomReg();
 
-				var male = new Genotype();
+				
+				// XXX: Work with pregenerated data
+				/*var male = new Genotype();
 				male.setSex('m');
 				male.setHomozygousFor('E');
 				Reg.getHistory().curParents['m'] = male;
@@ -50,7 +52,7 @@
 
 				var f2 = male2.recombine(female2);
 				Reg.getHistory().saveGeneration(f2);
-
+				//*/
 
 				overview = new Overview();
 				overview.present();
