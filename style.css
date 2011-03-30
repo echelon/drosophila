@@ -1,18 +1,3 @@
-
-#hidden_cloneable { 
-	display: none; 
-}
-
-a img { border: 0px; }
-a:link, a:visited { 
-	color: #d51; 
-	text-decoration: none;
-}
-a:hover, a:active {
-	color: #c00;
-	text-decoration: underline;
-}
-
 html, body {
 	height: 100%;
 	margin: 0px;
@@ -27,13 +12,7 @@ body {
 	background-image: url("./img/bg-linear.png");
 	background-attachment: fixed;
 	font-size: 1em;
-}
-
-#container {
-	width: 800px;
-	margin: 0px auto 0px auto;
-	background-image: url("./img/bar-bg40.png");
-	min-height: 100%;
+	font-family: verdana;
 }
 
 #logo {
@@ -43,9 +22,27 @@ body {
 }
 
 #logo h1 {
+	font-family: 'Trebuchet MS', Helvetica; 
+	font-size: 1.8em;
 	margin: 0px 0px 5px 3px;
 	padding: 0px;
-	font-size: 1.8em;
+}
+
+a img { border: 0px; }
+a:link, a:visited { 
+	color: #d51; 
+	text-decoration: none;
+}
+a:hover, a:active {
+	color: #c00;
+	text-decoration: underline;
+}
+
+#container {
+	width: 800px;
+	margin: 0px auto 0px auto;
+	background-image: url("./img/bar-bg40.png");
+	min-height: 100%;
 }
 
 hr {
@@ -58,6 +55,7 @@ hr {
 #main {
 	margin: 0px;
 	padding: 0px 40px 0px 40px;
+	font-size: 0.8em;
 }
 
 h3 {
@@ -92,9 +90,12 @@ h3 {
 
 /* OVERVIEW MODE */
 
-.overview_form_wrap {
-	padding: 0px;
-	text-align: center;
+.overview_main .accordion h3 {
+	font-size: 1.2em;
+}
+
+.overview_accordion_contents {
+	font-size: 0.8em;
 }
 
 .overview_parents_male {
@@ -110,6 +111,11 @@ h3 {
 	margin: 0px;
 	padding: 10px;
 	float: left;
+	text-align: center;
+}
+
+.overview_form_wrap {
+	padding: 0px;
 	text-align: center;
 }
 

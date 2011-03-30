@@ -7,9 +7,6 @@ function Overview()
 {
 	this.overviewDom = DomReg.overview();
 	this.attached = false;
-	
-	// Keep count of accordion sections
-	this.numSections = 0;
 
 	/**
 	 * Simple present.
@@ -33,14 +30,11 @@ function Overview()
 		var generations = Reg.getHistory().generations;
 
 		var dom = $.tmpl('overview', {
-				generations: generations,
-				testfunc: function() { return 'asdf'; }
+			generations: generations,
+			testfunc: function() { return 'asdf'; }
 		});
 
-		var prevGens = $.tmpl('overview_prev_generations')
-		
 		dom.appendTo('#main');
-		prevGens.appendTo('.overview_main .accordion');
 
 		//
 		// Accordion Layout
@@ -54,7 +48,7 @@ function Overview()
 		// More options to help height...
 		$('.accordion').accordion('option', 'clearStyle', true);
 		//this.overviewDom.find('.accordion').accordion('option', 'active', false);
-		$('.accordion').accordion('option', 'active', (this.numSections-1));
+		//$('.accordion').accordion('option', 'active', (idOfLastBox));
 
 		//
 		// Tabs
@@ -62,71 +56,19 @@ function Overview()
 
 		$('.tabs').tabs();
 
-		// Older generations
-		/*for(var i = 0; i < generations.length; i++)
-		{
-			var gen = generations[i];
-			var children = generations[i].children;
+		//
+		// TODO
+		//
 
-			dom = DomReg.overviewParentsOld();
-
-			// Handle parents, title
-			dom.find('h3 a').html('Cross #' + (i+1));
-			dom.find('.overview_parents_male').find('.status') 
-						.html(gen.parents.m.getPhenotype().phenotypeString());
-			dom.find('.overview_parents_female').find('.status')
-						.html(gen.parents.f.getPhenotype().phenotypeString());
-
-			// Handle children --  TODO: Poor interface.
-			var phenMap = children.phenotypeMap();
-			var out = "<ul>\n";
-			for(var hash in phenMap) {
-				out += "<li>";
-				out += phenMap[hash].phenotype.phenotypeString();
-				out += " &mdash; ";
-				out += phenMap[hash].count;
-				out += "</li>\n";
-			};
-			out += "</ul>\n";
-
-			phenMap = children.phenotypeWithoutSexMap();
-			out += "<ul>\n";
-			for(var hash in phenMap) {
-				out += "<li>";
-				out += phenMap[hash].phenotype.phenotypeWithoutSexString();
-				out += " &mdash; ";
-				out += phenMap[hash].count;
-				out += "</li>\n";
-			};
-			out += "</ul>";
-
-
-			dom.find('.overview_children_placeholder').html(out);
-
-			html += dom.html();
-			this.numSections++;
-		};*/
-
-		// New generation.
-		/*dom = DomReg.overviewParentsNew();
-		dom.find('h3 a').html('Next Cross (#' + (this.numSections+1) + ")");
-		html += dom.html();
-		this.numSections++;
-
-		this.overviewDom.find('.accordion').html(html);*/
-
-		/*// New individual callback.
-		this.overviewDom.find('.new_male').bind('click', function() { 
-				var form = new Form(false, 'm');
-				form.present();
+		// New individual callback.
+		$('.new_male').bind('click', function() { 
+			var form = new Form(false, 'm');
+			form.present();
 		});
-		this.overviewDom.find('.new_female').bind('click', function() { 
-				var form = new Form(false, 'f');
-				form.present();
+		$('.new_female').bind('click', function() { 
+			var form = new Form(false, 'f');
+			form.present();
 		});
-
-		// Update
-		this.updateParents();*/
 	};
 
 	/**

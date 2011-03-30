@@ -1,31 +1,25 @@
 <div class="overview_main">
-	<div class="accordion">
+	<div id="overview_accordion" class="accordion">
 
 		{{each(i, val) generations}}
 
-		<h3><a href="#">Cross # ${i+1}</a></h3>
-		<div>
+		<h3><a href="#">Cross #${i+1} Results</a></h3>
+		<div class="overview_accordion_contents">
+
 			<div class="overview_parents_male">
 				<img src="./img/blue-grad.png" width="150" height="125" />
-				<span class="links">
-					<p class="status">${parents.f.getPhenotype().phenotypeString()}</p>
-					<!-- TODO: View. -->
-					<!--<p class="view_link"><a href="#" class="view_male">View</a></p>-->
-				</span>
+				<p class="status">${parents.f.getPhenotype().phenotypeString()}</p>
 			</div>
 			<div class="overview_parents_female">
 				<img src="./img/red-grad.png" width="150" height="125" />
-				<span class="links">
-					<p class="status">${parents.m.getPhenotype().phenotypeString()}</p>
-					<!-- TODO: View. -->
-					<!--<p class="view_link"><a href="#" class="view_female">View</a></p>-->
-				</span>
+				<p class="status">${parents.m.getPhenotype().phenotypeString()}</p>
 			</div>
+
 			<div class="clear"></div>
 
-			<h3>Generation #${i+1}</h3>
 			<div id="tabs${i}" class="tabs">
 				<ul>
+					<li><a>Generation #${i+1}</a></li>
 					<li><a href="#tabs${i}-1">Group By Sex</a></li>
 					<li><a href="#tabs${i}-2">By Phenotype</a></li>
 				</ul>
@@ -51,8 +45,8 @@
 
 		{{/each}}
 			
-		<h3><a href="#">New Cross</a></h3>
-		<div>
+		<h3><a href="#">New Cross &mdash; Design or Select Parentals</a></h3>
+		<div class="overview_accordion_contents">
 			<div class="overview_parents_male">
 				<img src="./img/blue-grad.png" width="150" height="125" />
 				<span class="links">
@@ -83,10 +77,6 @@
 		<p>This constitutes notes concerning the code.</p>
 		<ul>
 			<li>Python compressor: flatten/merge all templates, etc. into one static HTML file. Will need a new/supplemented controller to support this. Also needs to batch minify all of the javascripts into one file.</li>
-			<li>Work on "Overview" mode now.</li>
-			<li>Generations will be "Tabs" that are navigable.</li>
-			<li>"Create fly" dialog/controls.</li>
-			<li>"Mate" dialog, which allows the user to pick a pair of flies to mate.</li>
 		</ul>	
 	</div>
 </div>
