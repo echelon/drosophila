@@ -30,10 +30,11 @@ function DomReg()
 	if(typeof DomReg._elements == 'undefined') {
 		// Keep track of template loading.
 		DomReg._numLoaded = 0;
-		DomReg._numToLoad = 2;
+		DomReg._numToLoad = 3;
 
 		loadTemplate('test', './view/test.html');
 		loadTemplate('overview', './view/overview.html');
+		loadTemplate('create', './view/create.html');
 	};
 
 	/**
