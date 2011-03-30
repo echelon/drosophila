@@ -26,6 +26,7 @@ body {
 	color: #000;
 	background-image: url("./img/bg-linear.png");
 	background-attachment: fixed;
+	font-size: 1em;
 }
 
 #container {

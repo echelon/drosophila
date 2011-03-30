@@ -1,43 +1,92 @@
+<div class="overview_main">
+	<div class="accordion">
 
-	<!-- Parents Part : OLD -->
+		{{each(i, val) generations}}
 
+		<h3><a href="#">Cross # ${i+1}</a></h3>
+		<div>
+			<div class="overview_parents_male">
+				<img src="./img/blue-grad.png" width="150" height="125" />
+				<span class="links">
+					<p class="status">${parents.f.getPhenotype().phenotypeString()}</p>
+					<!-- TODO: View. -->
+					<!--<p class="view_link"><a href="#" class="view_male">View</a></p>-->
+				</span>
+			</div>
+			<div class="overview_parents_female">
+				<img src="./img/red-grad.png" width="150" height="125" />
+				<span class="links">
+					<p class="status">${parents.m.getPhenotype().phenotypeString()}</p>
+					<!-- TODO: View. -->
+					<!--<p class="view_link"><a href="#" class="view_female">View</a></p>-->
+				</span>
+			</div>
+			<div class="clear"></div>
 
-	<!-- Parents Part : NEW -->
+			<h3>Generation #${i+1}</h3>
+			<div id="tabs${i}" class="tabs">
+				<ul>
+					<li><a href="#tabs${i}-1">Group By Sex</a></li>
+					<li><a href="#tabs${i}-2">By Phenotype</a></li>
+				</ul>
+				<div id="tabs${i}-1">
+					<ul>
+					{{each children.phenotypeMap()}}
+						<li>${$value.phenotype.phenotypeString()} 
+							&mdash; ${$value.count}</li>
+					{{/each}}
+					</ul>
+				</div>
+				<div id="tabs${i}-2">
+					<ul>
+					{{each children.phenotypeWithoutSexMap()}}
+						<li>${$value.phenotype.phenotypeWithoutSexString()} 
+							&mdash; ${$value.count}</li>
+					{{/each}}
+					</ul>
+				</div>
+			</div>
 
-<div class="overview_parents_new">
-	<h3><a href="#">Cross Number</a></h3>
-	<div>
-	<div class="overview_parents_male">
-		<img src="./img/blue-grad.png" width="150" height="125" />
-		<span class="links">
-			<p class="status">Status Here</p>
-			<p class="new_link"><a href="#" class="new_male">Design male</a></p>
-			<p class="edit_link"><a href="#" class="edit_male">Edit</a></p>
-		</span>
-	</div>
-	<div class="overview_parents_female">
-		<img src="./img/red-grad.png" width="150" height="125" />
-		<span class="links">
-			<p class="status">Status Here</p>
-			<p class="new_link"><a href="#" class="new_female">Design female</a></p>
-			<p class="edit_link"><a href="#" class="edit_female">Edit</a></p>
-		</span>
-	</div>
-	<div class="clear"></div>
-	<div class="overview_form_wrap">
-		<form class="overview_form" action="#" method="get">
-			<input type="submit" value="Cross" />
-		</form>
-	</div>
+		</div>
+
+		{{/each}}
+			
+		<h3><a href="#">New Cross</a></h3>
+		<div>
+			<div class="overview_parents_male">
+				<img src="./img/blue-grad.png" width="150" height="125" />
+				<span class="links">
+					<p class="status">Status Here</p>
+					<p class="new_link"><a href="#" class="new_male">Design male</a></p>
+					<p class="edit_link"><a href="#" class="edit_male">Edit</a></p>
+				</span>
+			</div>
+			<div class="overview_parents_female">
+				<img src="./img/red-grad.png" width="150" height="125" />
+				<span class="links">
+					<p class="status">Status Here</p>
+					<p class="new_link"><a href="#" class="new_female">Design female</a></p>
+					<p class="edit_link"><a href="#" class="edit_female">Edit</a></p>
+				</span>
+			</div>
+			<div class="clear"></div>
+			<div class="overview_form_wrap">
+				<form class="overview_form" action="#" method="get">
+					<input type="submit" value="Cross" />
+				</form>
+			</div>
+		</div>
+
+	</div> <!-- End Accordion Layout -->
+
+	<div id="todo">
+		<p>This constitutes notes concerning the code.</p>
+		<ul>
+			<li>Python compressor: flatten/merge all templates, etc. into one static HTML file. Will need a new/supplemented controller to support this. Also needs to batch minify all of the javascripts into one file.</li>
+			<li>Work on "Overview" mode now.</li>
+			<li>Generations will be "Tabs" that are navigable.</li>
+			<li>"Create fly" dialog/controls.</li>
+			<li>"Mate" dialog, which allows the user to pick a pair of flies to mate.</li>
+		</ul>	
 	</div>
 </div>
-
-
-	<!-- Children -->
-
-<div class="overview_children">
-	<h3>Results: F1 Generation</h3>
-	Pending...
-</div>
-
-

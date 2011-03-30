@@ -31,16 +31,20 @@ function Overview()
 		this.isSetup = true;
 
 		var generations = Reg.getHistory().generations;
-		var html = '';
-		//var dom = null;
 
-		var dom = $.tmpl('overview_main');
+		var dom = $.tmpl('overview', {
+				generations: generations,
+				testfunc: function() { return 'asdf'; }
+		});
 
-		var prevGens = $.tmpl('overview_prev_generations', generations);
+		var prevGens = $.tmpl('overview_prev_generations')
 		
-		//dom.find('.overview_main').html(prevGens.html());
 		dom.appendTo('#main');
 		prevGens.appendTo('.overview_main .accordion');
+
+		//
+		// Accordion Layout
+		//
 
 		// Activate accordion after show to get correct height.
 		$('.accordion').accordion();
@@ -51,6 +55,12 @@ function Overview()
 		$('.accordion').accordion('option', 'clearStyle', true);
 		//this.overviewDom.find('.accordion').accordion('option', 'active', false);
 		$('.accordion').accordion('option', 'active', (this.numSections-1));
+
+		//
+		// Tabs
+		//
+
+		$('.tabs').tabs();
 
 		// Older generations
 		/*for(var i = 0; i < generations.length; i++)

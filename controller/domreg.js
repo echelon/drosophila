@@ -33,13 +33,10 @@ function DomReg()
 
 		// Keep track of template loading.
 		DomReg._numLoaded = 0;
-		DomReg._numToLoad = 4;
+		DomReg._numToLoad = 2;
 
 		loadTemplate('test', './view/test.html');
 		loadTemplate('overview', './view/overview.html');
-		loadTemplate('overview_main', './view/overview.main.html');
-		loadTemplate('overview_prev_generations', 
-				'./view/overview.prev_generations.html');
 	};
 
 	/**
