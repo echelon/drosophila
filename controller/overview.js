@@ -1,11 +1,9 @@
-
 /**
  * The "Main GUI"
  * TODO
  */
 function Overview()
 {
-	this.overviewDom = DomReg.overview();
 	this.attached = false;
 
 	/**
@@ -80,7 +78,7 @@ function Overview()
 		if(this.attached) {
 			return;
 		};
-		main.append(this.overviewDom)		
+		//main.append(this.overviewDom)		
 		this.attached = true;
 	};
 
@@ -95,7 +93,7 @@ function Overview()
 	/**
 	 * Hide DOM
 	 */
-	this.hide = function() { this.overviewDom.hide(); };
+	//this.hide = function() { this.overviewDom.hide(); };
 
 	/**
 	 * Detach from main.
