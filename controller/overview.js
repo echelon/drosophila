@@ -32,10 +32,28 @@ function Overview()
 
 		var generations = Reg.getHistory().generations;
 		var html = '';
-		var dom = null;
+		//var dom = null;
+
+		var dom = $.tmpl('overview_main');
+
+		var prevGens = $.tmpl('overview_prev_generations', generations);
+		
+		//dom.find('.overview_main').html(prevGens.html());
+		dom.appendTo('#main');
+		prevGens.appendTo('.overview_main .accordion');
+
+		// Activate accordion after show to get correct height.
+		$('.accordion').accordion();
+		$('.accordion').accordion('option', 'animated', 'slide');
+		$('.accordion').accordion('option', 'collapsible', true);
+
+		// More options to help height...
+		$('.accordion').accordion('option', 'clearStyle', true);
+		//this.overviewDom.find('.accordion').accordion('option', 'active', false);
+		$('.accordion').accordion('option', 'active', (this.numSections-1));
 
 		// Older generations
-		for(var i = 0; i < generations.length; i++)
+		/*for(var i = 0; i < generations.length; i++)
 		{
 			var gen = generations[i];
 			var children = generations[i].children;
@@ -77,15 +95,15 @@ function Overview()
 
 			html += dom.html();
 			this.numSections++;
-		};
+		};*/
 
 		// New generation.
-		dom = DomReg.overviewParentsNew();
+		/*dom = DomReg.overviewParentsNew();
 		dom.find('h3 a').html('Next Cross (#' + (this.numSections+1) + ")");
 		html += dom.html();
 		this.numSections++;
 
-		this.overviewDom.find('.accordion').html(html);
+		this.overviewDom.find('.accordion').html(html);*/
 
 		/*// New individual callback.
 		this.overviewDom.find('.new_male').bind('click', function() { 
@@ -120,17 +138,6 @@ function Overview()
 	 */
 	this.show = function() 
 	{ 
-		this.overviewDom.show(); 
-
-		// Activate accordion after show to get correct height.
-		this.overviewDom.find('.accordion').accordion();
-		this.overviewDom.find('.accordion').accordion('option', 'animated', 'slide');
-		this.overviewDom.find('.accordion').accordion('option', 'collapsible', true);
-
-		// More options to help height...
-		this.overviewDom.find('.accordion').accordion('option', 'clearStyle', true);
-		//this.overviewDom.find('.accordion').accordion('option', 'active', false);
-		this.overviewDom.find('.accordion').accordion('option', 'active', (this.numSections-1));
 	};
 
 	/**
