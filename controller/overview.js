@@ -78,9 +78,12 @@ function Overview()
 		// This will involve porting all of the form controller logic.. ugh. 
 		// var maleDialog = createDialog();
 		
+		var dialog = new Dialog(); //createDialog();
+
 		// New individual callback.
 		$('.new_male').bind('click', function() { 
-			dialog.dialog('open')
+			//dialog.dialog('open')
+			dialog.open();
 			return false; // Nofollow link
 			//var form = new Form(false, 'm');
 			//form.present();
