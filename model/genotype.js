@@ -385,7 +385,7 @@ function Genotype()
 			offspring.push(indiv);
 		};
 
-		return new Generation(offspring);
+		return new Generation(this, genotype, offspring);
 	};
 };
 
