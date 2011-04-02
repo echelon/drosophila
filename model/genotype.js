@@ -322,6 +322,7 @@ function Genotype()
 	};
 
 	/**
+	 * Recombine two genomes, return new Generation object.
 	 * TODO TODO TODO -- THIS IS NOT IDEAL
 	 * I need to write a combinatoric function, because this is insanely
 	 * lazy and makes a huge performance hit. Very unsophisticated. 

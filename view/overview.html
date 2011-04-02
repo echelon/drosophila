@@ -8,11 +8,11 @@
 
 			<div class="overview_parents_male">
 				<img src="./img/blue-grad.png" width="150" height="125" />
-				<p class="status">${parents.f.getPhenotype().phenotypeString()}</p>
+				<p class="status">${father.getPhenotype().phenotypeString()}</p>
 			</div>
 			<div class="overview_parents_female">
 				<img src="./img/red-grad.png" width="150" height="125" />
-				<p class="status">${parents.m.getPhenotype().phenotypeString()}</p>
+				<p class="status">${mother.getPhenotype().phenotypeString()}</p>
 			</div>
 
 			<div class="clear"></div>
@@ -25,7 +25,7 @@
 				</ul>
 				<div id="tabs${i}-1">
 					<ul>
-					{{each children.phenotypeMap()}}
+					{{each val.phenotypeMap()}}
 						<li>${$value.phenotype.phenotypeString()} 
 							&mdash; ${$value.count}</li>
 					{{/each}}
@@ -33,7 +33,7 @@
 				</div>
 				<div id="tabs${i}-2">
 					<ul>
-					{{each children.phenotypeWithoutSexMap()}}
+					{{each val.phenotypeWithoutSexMap()}}
 						<li>${$value.phenotype.phenotypeWithoutSexString()} 
 							&mdash; ${$value.count}</li>
 					{{/each}}
@@ -72,13 +72,4 @@
 		</div>
 
 	</div> <!-- End Accordion Layout -->
-
-	<div id="todo">
-		<p>This constitutes notes concerning the code.</p>
-		<ul>
-			<li>Apply 'dimmed' css style to background when the modal dialog comes up. This should make everything 
-			even more apparent.</li>
-			<li>Python compressor: flatten/merge all templates, etc. into one static HTML file. Will need a new/supplemented controller to support this. Also needs to batch minify all of the javascripts into one file.</li>
-		</ul>	
-	</div>
 </div>

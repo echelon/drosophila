@@ -6,13 +6,13 @@
 		<script type="text/javascript" src="./lib/jquery.tmpl.js"></script>
 		<script type="text/javascript" src="./model/allele.js"></script>
 		<script type="text/javascript" src="./model/trait.js"></script>
+		<script type="text/javascript" src="./model/generation.js"></script>
 		<script type="text/javascript" src="./model/history.js"></script>
 		<script type="text/javascript" src="./model/registry.js"></script>
 		<script type="text/javascript" src="./model/misc.js"></script>
 		<script type="text/javascript" src="./model/defs.js"></script>
 		<script type="text/javascript" src="./model/genotype.js"></script>
 		<script type="text/javascript" src="./model/phenotype.js"></script>
-		<script type="text/javascript" src="./model/generation.js"></script>
 		<script type="text/javascript" src="./controller/domreg.js"></script>
 		<script type="text/javascript" src="./controller/form.js"></script>
 		<script type="text/javascript" src="./controller/dialog.js"></script>
@@ -25,17 +25,18 @@
 				DomReg();
 
 				// XXX: Work with pregenerated data
-				var male = new Genotype();
+				/*var male = new Genotype();
+				
 				male.setSex('m');
 				male.setHomozygousFor('E');
-				Reg.getHistory().curParents['m'] = male;
+				Reg.getHistory().curGeneration.father = male;
 
 				var female = new Genotype();
 				female.setSex('f');
-				Reg.getHistory().curParents['f'] = female;
+				Reg.getHistory().curGeneration.mother = female;
 
-				var f1 = male.recombine(female);
-				Reg.getHistory().saveGeneration(f1);
+				Reg.getHistory().curGeneration = male.recombine(female);
+				Reg.getHistory().startNextGeneration();
 
 				<!-- Second gen -->
 
@@ -44,15 +45,15 @@
 				//male2.setHomozygousFor('SV');
 				//male2.setHomozygousFor('D');
 				//male2.setHomozygousFor('SN');
-				Reg.getHistory().curParents['m'] = male2;
+				Reg.getHistory().curGeneration.father = male2;
 
 				var female2 = new Genotype();
 				female2.setSex('f');
 				female2.setHomozygousFor('Y');
-				Reg.getHistory().curParents['f'] = female2;
+				Reg.getHistory().curGeneration.mother = female2;
 
-				var f2 = male2.recombine(female2);
-				Reg.getHistory().saveGeneration(f2);
+				Reg.getHistory().curGeneration = male2.recombine(female2);
+				Reg.getHistory().startNextGeneration();
 				//*/
 
 			};
@@ -69,6 +70,18 @@
 			</div>
 			<!-- Main: This is where the active GUI elements will show up. -->
 			<div id="main"></div>
+			<div id="todo">
+				<p><strong>TODO List:</strong> Notes concerning code progress.</p>
+				<ul>
+					<li><strong>Images</strong> &mdash; procedurally generate images of each phenotype. 
+					Requires artwork.</li>
+					<li><strong>Tooling</strong> &mdash; Python compressor: flatten/merge all templates, 
+					etc. into one static HTML file. Will need a new/supplemented controller to support this. 
+					Also needs to batch minify all of the javascripts into one file.</li>
+					<li><strong>Model</strong> &mdash; Parentals have 'history' recording the source they 
+					came from, eg. generation number or null</li>
+				</ul>	
+			</div>
 		</div>
 	</body>
 </html>

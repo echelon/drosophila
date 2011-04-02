@@ -78,6 +78,18 @@ function Generation(parent1, parent2, children)
 	this.tallyChildren(children);
 
 	/**
+	 * Determine whether the generation has any offspring.
+	 */
+	this.hasOffspring = function()
+	{
+		var k;
+		for(k in this._offspring) {
+			return true;
+		};
+		return false;
+	}
+
+	/**
 	 * Generate and return the 'phenotype -> count' map. 
 	 */
 	this.phenotypeMap = function()

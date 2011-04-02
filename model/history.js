@@ -8,25 +8,14 @@ function History()
 {
 	/**
 	 * The current generation that is being built.
+	 * A Generation object contains the parents, and after cross, the
+	 * statistics on the offspring. 
 	 */
-	this.curGeneration = 0;
+	this.curGeneration = new Generation();
 
 	/**
-	 * The parents of the current (upcoming) generation.
-	 * mGen and fGen are pointers to the generation of the parent. If
-	 * negative, they are P generation.
-	 */
-	this.curParents = {
-		m: 0, 
-		f: 0,
-		mGen: -1, // TODO
-		fGen: -1  // TODO
-	};
-
-	/**
-	 * All created (historal) generations, for reference.
-	 * - parents: m, f, mGen, fGen
-	 * - children: <Generation>
+	 * All created (historal) generations, for reference. This does
+	 * not include the current one.
 	 */
 	this.generations = [];
 
@@ -36,17 +25,18 @@ function History()
 	 * emulating classical Flylab easier, as the user is only able to
 	 * choose ONE ALLELE PER TRAIT for an ENTIRE simulation. 
 	 * Takes the form of {traitAbbr: allele}.
+	 * TODO: Verify this still works after refactor!!
 	 */
 	this.traitAlleleMap = {};
 
 	/**
 	 * Reset the history! 
 	 * Allows for a future simulation to be run: TODO
+	 * TODO: Verify traitAlleleMap works after refactor.
 	 */
 	this.reset = function()
 	{
-		this.curGeneration = 0;
-		this.curParents = { m: 0, f: 0, mGen: -1, fGen: -1 };
+		this.curGeneration = new Generation();
 		this.generations = [];
 		this.traitAlleleMap = {};
 	};
@@ -55,74 +45,60 @@ function History()
 	 * Push a new generation on the list.
 	 * This is critical to save history state info. 
 	 */
-	this.saveGeneration = function(gen) 
+	this.startNextGeneration = function() 
 	{
-		var traitMap = {};
+		var that, addToMap, tMap;
 
-		if(!gen || !this.curParents.m || !this.curParents.f) {
+		// Must have parents and children
+		if(!this.curGeneration.mother || !this.curGeneration.father || 
+				!this.curGeneration.hasOffspring()) {
 			return;
-		};
-
-		var parents = {
-			m: this.curParents['m'],
-			f: this.curParents['f'],
-			mGen: this.curParents['mGen'], // TODO
-			fGen: this.curParents['fGen']  // TODO
 		}
-		
-		this.generations.push({parents:parents, children:gen});
 
-		// Save the alleles and traits selected
-		traitMap = this.curParents.m.traitAlleleMap();
-		for(var abbr in traitMap) {
-			if(this.traitAlleleMap[abbr]) {
-				continue;
+		that = this;
+
+		// Function that adds selected alleles to the global history of
+		// such choices made.
+		addToMap = function(parent) {
+			tMap = parent.traitAlleleMap();
+			for(abbr in tMap) {
+				if(that.traitAlleleMap[abbr]) {
+					continue;
+				};
+				that.traitAlleleMap[abbr] = tMap[abbr];
 			};
-			this.traitAlleleMap[abbr] = traitMap[abbr];
 		};
 
-		traitMap = this.curParents.f.traitAlleleMap();
-		for(var abbr in traitMap) {
-			if(this.traitAlleleMap[abbr]) {
-				continue;
-			};
-			this.traitAlleleMap[abbr] = traitMap[abbr];
-		};
-		
-		// Clear 'current' state.
-		this.curGeneration++;
-		this.curParents = {
-				m: 0,
-				f: 0,
-				mGen: -1,
-				fGen: -1
-		};
+		addToMap(this.curGeneration.mother);
+		addToMap(this.curGeneration.father);
+
+		// Advance to next generation...
+		this.generations.push(this.curGeneration);
+		this.curGeneration = new Generation();
 	};
 
 	/**
-	 * Get the parents of a generation, by id.
+	 * Get the generation, by number.
 	 */
-	this.getParentsOfGeneration = function(genNumber)
-	{
+	this.getGeneration = function(genNumber) {
 		if(genNumber >= this.generations.length) {
 			return null;
 		};
-
-		return this.generations[genNumber].parents;
-	};
-
-	/**
-	 * Get the father of a generation directly.
-	 */
-	this.getFatherOfGeneration = function(genNumber) { 
-		return this.getParentsOfGeneration().m || null;
+		return this.generations[genNumber];
 	};
 
 	/**
 	 * Get the mother of a generation directly.
 	 */
 	this.getMotherOfGeneration = function(genNumber) { 
-		return this.getParentsOfGeneration().f || null;
+		return this.getGeneration(genNumber).mother || null;
+	};
+
+	/**
+	 * Get the father of a generation directly.
+	 */
+	this.getFatherOfGeneration = function(genNumber) { 
+		return this.getGeneration(genNumber).father || null;
 	};
 
 	/**
