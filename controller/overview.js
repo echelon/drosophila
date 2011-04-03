@@ -4,135 +4,106 @@
  */
 function Overview()
 {
-	this.attached = false;
+	var that = this;
+
+	this.dialogA = new Dialog('m');
+	this.dialogB = new Dialog('f');
+
+	$('#main').bind('rebuildLayout', function() { that.rebuildLayout(); });
+	$('#main').bind('rebuildGen', function() { that.rebuildCurrentGen(); });
 
 	/**
-	 * Simple present.
-	 */
-	this.present = function() 
-	{ 
-		DomReg.present(this); 
-	};
-
-	/**
-	 * Setup.
-	 * First initialization, before Attachment or Show().
-	 */
-	this.setup = function()
-	{
-		if(this.isSetup) {
-			return;
-		}
-		this.isSetup = true;
-
-		// Func: Create a modal dialog window
-		var createDialog = function(parent) {
-			/*var dialog = $.tmpl('create', parent);
-			var title = 'Create ' + parent.getSexStr() + ' parent';
-			dialog.dialog({
-					autoOpen: false,
-					modal: true,
-					title: title,
-					width: 700,
-					height: 400,
-					draggable: false,
-					resizable: false
-				});
-			return dialog;*/
-		};
-
-		var generations = Reg.getHistory().generations;
-
-		var dom = $.tmpl('overview', {
-			generations: generations,
-			testfunc: function() { return 'asdf'; }
-		});
-
-		dom.appendTo('#main');
-
-		//
-		// Accordion Layout
-		//
-
-		// Activate accordion after show to get correct height.
-		$('.accordion').accordion();
-		$('.accordion').accordion('option', 'animated', 'slide');
-		$('.accordion').accordion('option', 'collapsible', true);
-
-		// More options to help height...
-		$('.accordion').accordion('option', 'clearStyle', true);
-		//this.overviewDom.find('.accordion').accordion('option', 'active', false);
-		//$('.accordion').accordion('option', 'active', (idOfLastBox));
-
-		//
-		// Tabs
-		//
-
-		$('.tabs').tabs();
-
-		//
-		// TODO
-		//
-		
-		// TODO TODO TODO TODO:
-		// This will involve porting all of the form controller logic.. ugh. 
-		// var maleDialog = createDialog();
-	
-		// TODO TODO TODO
-		var dialogA = new Dialog('m'); //createDialog();
-		var dialogB = new Dialog('f');
-
-		// New individual callback.
-		$('.new_male').bind('click', function() { 
-			dialogA.open();
-			return false; // Nofollow link
-		});
-		$('.new_female').bind('click', function() { 
-			dialogB.open();
-			return false; // Nofollow link
-		});
-	};
-
-	/**
-	 * Attach to main.
-	 */
-	this.attach = function()
-	{
-		var main = DomReg.getMain();
-		if(this.attached) {
-			return;
-		};
-		//main.append(this.overviewDom)		
-		this.attached = true;
-	};
-
-	/**
-	 * Show DOM 
-	 * Happens after 'Setup' and 'Attach'.
+	 * TODO DOC
 	 */
 	this.show = function() 
 	{ 
+		this.rebuildLayout();
 	};
 
 	/**
-	 * Hide DOM
+	 * CALLBACK
+	 * On Cross submit, perform the cross and rebuild the layout.
 	 */
-	//this.hide = function() { this.overviewDom.hide(); };
-
-	/**
-	 * Detach from main.
-	 */
-	this.detach = function()
+	this.onCross = function()
 	{
-		var main = DomReg.getMain();
-		if(!this.attached) {
+		var hist, male, female, gen;
+
+		hist = Reg.getHistory();
+		female = hist.curGeneration.mother;
+		male = hist.curGeneration.father;
+
+		if(!male || !female) {
 			return;
 		};
-		main.empty();
-		this.attached = false;
+
+		hist.curGeneration = female.recombine(male);
+		hist.startNextGeneration();
+
+		this.rebuildLayout();
 	};
 
-	// TODO: DELETE, etc.
+	/**
+	 * Rebuild the current generation.
+	 * Called when manipulating the parents.
+	 */
+	this.rebuildCurrentGen = function()
+	{
+		var that = this;
 
+		// Rebuild the parent components of the cross
+		var rebuildParent = function(parent, dialog, selector) {
+			if(parent) {
+				$(selector + ' .new_link_p').hide();
+				$(selector + ' .edit_link_p').show();
+				$(selector + ' .status').html(parent.getPhenotype()
+						.phenotypeString());
+			}
+			else {
+				$(selector + ' .new_link_p').show();
+				$(selector + ' .edit_link_p').hide();
+				$(selector + ' .status').html('');
+			};
+	
+			// Setup callbacks.
+			$(selector + ' .new_link').bind('click', function() { 
+				dialog.open();
+				return false; // Nofollow link
+			});
+		};
+
+		rebuildParent(Reg.getHistory().curGeneration.father, this.dialogA, '#new_father');
+		rebuildParent(Reg.getHistory().curGeneration.mother, this.dialogB, '#new_mother');
+	};
+
+	/**
+	 * Rebuild the entire layout.
+	 * Typically called when new generations have been added.
+	 */
+	this.rebuildLayout = function()
+	{
+		var tmpl;
+
+		tmpl = $.tmpl('overview', { 
+			generations: Reg.getHistory().generations 
+		});
+
+		$('#main').html('');
+		tmpl.appendTo('#main');
+
+		// Accordion setup & layout options
+		$('.accordion').accordion({
+			animated: 'slide',
+			collapsible: true,
+			clearStyle: true
+		});
+
+		// Stats tabs for prev generations
+		$('.tabs').tabs();
+
+		// Callbacks
+		$('#cross_form').bind('submit', function() { that.onCross(); });
+
+		this.rebuildCurrentGen();
+	};
 };
 

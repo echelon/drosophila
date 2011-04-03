@@ -15,10 +15,25 @@ body {
 	font-family: verdana;
 }
 
-/* TODO: Check cross-browser theming. */
+/* Modal dialog overlay. TODO: Check cross-browser theming. */
 .ui-widget-overlay {
     background: black;
-    opacity: 0.6;
+    opacity: 0.5;
+}
+
+/* "New Cross" Accordion gets highlighted. */
+#new_cross_header.ui-state-default.ui-corner-all,
+#new_cross_header.ui-helper-reset.ui-corner-all { 
+	background: #e6e6e6 url(./img/ui-bg_glass_highlight.png) 50% 50% repeat-x; 
+	color: #444444;
+	border: 1px solid #aaaa99; 
+}
+
+/* "New Cross" Accordion gets highlighted. */
+#new_cross_header.ui-state-hover.ui-corner-all {
+	background: #e6e6e6 url(./img/ui-bg_glass_highlight2.png) 50% 50% repeat-x; 
+	color: #444444;
+	border: 1px solid #999999; 
 }
 
 #logo {
@@ -106,6 +121,10 @@ h3 {
 }
 
 .overview_accordion_contents {
+	font-size: 1.0em;
+}
+
+.overview_accordion_contents .tabs {
 	font-size: 0.8em;
 }
 
