@@ -170,22 +170,6 @@ function Form(genotype, sex)
 	};
 
 	/**
-	 * Enable submit button.
-	 */
-	this.enableSubmit = function()
-	{
-		this.formDom.find('#designer_form_add_allele_submit').attr('disabled', '');
-	};
-
-	/**
-	 * Disable submit button.
-	 */
-	this.disableSubmit = function()
-	{
-		this.formDom.find('#designer_form_add_allele_submit').attr('disabled', 'disabled');
-	};
-
-	/**
 	 * Set the image.
 	 */
 	this.setImage = function()

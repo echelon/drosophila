@@ -27,7 +27,7 @@ function Overview()
 
 		// Func: Create a modal dialog window
 		var createDialog = function(parent) {
-			var dialog = $.tmpl('create', parent);
+			/*var dialog = $.tmpl('create', parent);
 			var title = 'Create ' + parent.getSexStr() + ' parent';
 			dialog.dialog({
 					autoOpen: false,
@@ -38,7 +38,7 @@ function Overview()
 					draggable: false,
 					resizable: false
 				});
-			return dialog;
+			return dialog;*/
 		};
 
 		var generations = Reg.getHistory().generations;
@@ -77,20 +77,19 @@ function Overview()
 		// TODO TODO TODO TODO:
 		// This will involve porting all of the form controller logic.. ugh. 
 		// var maleDialog = createDialog();
-		
-		var dialog = new Dialog(); //createDialog();
+	
+		// TODO TODO TODO
+		var dialogA = new Dialog('m'); //createDialog();
+		var dialogB = new Dialog('f');
 
 		// New individual callback.
 		$('.new_male').bind('click', function() { 
-			//dialog.dialog('open')
-			dialog.open();
+			dialogA.open();
 			return false; // Nofollow link
-			//var form = new Form(false, 'm');
-			//form.present();
 		});
 		$('.new_female').bind('click', function() { 
-			var form = new Form(false, 'f');
-			form.present();
+			dialogB.open();
+			return false; // Nofollow link
 		});
 	};
 

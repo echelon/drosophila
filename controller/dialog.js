@@ -1,32 +1,24 @@
-
-/**
- * The type of dialog we're opening.
- */
-var DialogType = {
-	NEW_MALE : 1,
-	NEW_FEMALE: 2,
-	EDIT : 3
-	// TODO: Select previous generation.
-};
-
 /**
  * Dialog
  * Wraps jQuery UI's dialog functionality and adapts it to our purposes
  * in creating new parentals.
  */
-function Dialog(dialogType, genotype)
+function Dialog(sex)
 {
 	var that = this;
 
 	/**
 	 * Type of dialog.
 	 */
-	this.dialogType = dialogType;
+	this.sex = 'f';
+	
+	this.curAction = null; // 'create' or 'edit'.
 
 	/**
-	 * Current genotype pointer.
+	 * The tempory genotype that we work with.
+	 * Acts as a buffer for the actual History.curGeneration.mother/etc
 	 */
-	this.genotype = null;
+	this.tempGenotype = null;
 
 	/**
 	 * The currently selected trait and allele in the allele builder.
@@ -46,55 +38,93 @@ function Dialog(dialogType, genotype)
 	this.dialog.dialog({
 		autoOpen: false,
 		modal: true,
-		title: 'Untitled',
+		title: 'UNTITLED MODAL DIALOG',
 		width: 700,
 		height: 400,
 		draggable: false,
 		resizable: false,
+		close: function(event, ui) { that.onClose(); },
 		buttons: { 
-			'Use as parent': function() { $(this).dialog("close"); }, // TODO: Not general enough
-			Cancel: function() { that.close(); }
+			'Save': function() { that.save(); },
+			Cancel: function() { that.cancel(); }
 		}
 	});
 
-	//
-	// XXX CONSTRUCT XXX
-	//
-	
-	// Set genotype pointer
-	switch(dialogType) {
-		case DialogType.NEW_MALE:
-			this.genotype = new Genotype();
-			this.genotype.setSex('m');
-			break;
-		case DialogType.NEW_FEMALE:
-			this.genotype = new Genotype();
-			this.genotype.setSex('f');
-			break;
-		case DialogType.EDIT:
-			this.genotype = genotype;
+	var parseSex = function(s) {
+		switch(s.toLowerCase()) {
+			case 'f':
+				return 'f';
+			case 'm': 
+				return 'm';
+		};
+		return 'f';
 	};
-	
-	// Form callbacks.
+
+	this.sex = parseSex(sex);
+
+	/**
+	 * Form and Event Callbacks.
+	 */
 	$('.trait').bind('change', function() { that.traitSelected(); });
 	$('.allele').bind('change', function() { that.alleleSelected(); });
 	$('.designer_form_add_allele').bind('submit', function() {
 			that.alleleSubmitted();
 			return false; // Prevents submit
 	});
-	$('.designer_form_complete').bind('submit', function() {
-			that.onCompleteSubmit();
-			return false; // Prevents submit
-	});
-
 
 	/* ====================== JQUERY UI API =========================== */
 
 	/**
-	 * Manage the dialog window. 
+	 * Called to open the dialog. 
+	 * Loads the proper state (create or edit) for the current action. 
 	 */
 	this.open = function()
 	{
+		var genoSrc, setStateFor;
+		var that = this;
+
+		// Function: Set the dialog edit state for the source genotype.
+		setStateFor = function(src)
+		{
+			var tMap, alleles, abbr;
+
+			if(!src) {
+				that.action = 'create';
+				that.tempGenotype = new Genotype();
+				that.tempGenotype.sex = that.sex;
+				that.selectedTrait = null;
+				that.selectedAllele = null;
+				that.alleles = [];
+				that.setTitle('Create ' + that.tempGenotype.getSexStr(true));
+				return;
+			};
+
+			that.action = 'edit';
+			that.tempGenotype = src.copy();
+			that.selectedTrait = null;
+			that.selectedAllele = null;
+			that.setTitle('Edit ' + that.tempGenotype.getSexStr(true));
+
+			// Load the alleles
+			tMap = src.traitAlleleMap();
+			alleles = [];
+			for(abbr in tMap) {
+				alleles.push(tMap[abbr]);
+			};
+			that.alleles = alleles;
+		};
+
+		if(this.sex == 'f') {
+			setStateFor(Reg.getHistory().curGeneration.mother);
+		}
+		else {
+			setStateFor(Reg.getHistory().curGeneration.father);
+		};
+
+		// Set title
+
+		// Initialize the UI
+		alert('Initialize UI'); // XXX XXX TEMP
 		this.buildTraitSelect();
 		this.updateGenotype();
 		this.updateImage();
@@ -104,7 +134,11 @@ function Dialog(dialogType, genotype)
 		this.dialog.dialog('open');
 	};
 
-	this.close = function() { this.dialog.dialog('close'); };
+
+	this.close = function() 
+	{ 
+		this.dialog.dialog('close');
+	};
 
 	/**
 	 * Additional management of dialog window.
@@ -124,6 +158,29 @@ function Dialog(dialogType, genotype)
 	 */
 	this.isOpen = function() { return this.dialog.dialog('isOpen'); };
 
+
+	/* ====================== MANAGE STATE & CLOSE ==================== */
+
+	// TODO: Incomplete
+	this.save = function()
+	{
+		this.close();
+	};
+
+	/**
+	 * Cancels the 'create' or 'edit' action. 
+	 * Makes no change to the current generation state.
+	 */
+	this.cancel = function()
+	{
+		// TODO: Incomplete
+		this.alleles = [];	
+		this.selectedTrait = null;
+		this.selectedAllele = null;
+		//this.tempGenotype = null;
+
+		this.close();
+	};
 
 	/* ====================== BUILD & ENABLE ========================== */
 
@@ -189,17 +246,17 @@ function Dialog(dialogType, genotype)
 		$('.trait_allele_submit').attr('disabled', '');
 	};
 
-	/* ====================== DISABLE ================================= */
+	/* ====================== DISABLE PARTS OF FORM =================== */
 
 	/**
 	 * Disable Allele selection. 
 	 */
 	this.disableAlleleSelect= function()
 	{
-		var options = "<option disabled=\"true\" selected=\"true\">Allele</option>"; 
+		var opts = '<option disabled="true" selected="true">Allele</option>';
 		var select = $('.allele')
 		select.empty()
-		select.html(options);
+		select.html(opts);
 		select.attr('disabled', 'disabled'); // disable
 	};
 
@@ -268,10 +325,21 @@ function Dialog(dialogType, genotype)
 				this.alleles.push(this.selectedAllele);
 			}
 		}
+		alert('allele submitted'); // XXX XXX TEMP
 		this.updateGenotype();
 		this.resetForm();
 		this.updateFeed();
 		this.updateImageSubtitle();
+	};
+
+	this.onClose = function()
+	{
+		// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO 
+		// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO 
+		// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO 
+		// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO 
+		// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO 
+		// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO 
 	};
 
 	/* ====================== DIALOG STATE ============================ */
@@ -291,14 +359,15 @@ function Dialog(dialogType, genotype)
 
 	/**
 	 * Update the genotype
+	 * TODO TODO TODO: Remove?
 	 */
 	this.updateGenotype = function()
 	{
-		if(!this.genotype) {
-			this.genotype = new Genotype();
-		};
+		alert(this.tempGenotype) // XXX: Why is this failing? TODO
+		assert((this.tempGenotype), 'Dialog.updateGenotype -- no genotype!');
+
 		for(var i = 0; i < this.alleles.length; i++) {
-			this.genotype.setHomozygousFor(this.alleles[i]);
+			this.tempGenotype.setHomozygousFor(this.alleles[i]);
 		};
 	};
 
@@ -310,7 +379,7 @@ function Dialog(dialogType, genotype)
 		var imgDiv = $('.designer_img');
 		var img = '<img width="150" height="125" ';
 
-		if(this.genotype.getSex() == 'm') {
+		if(this.tempGenotype.getSex() == 'm') {
 			img += 'src="./img/blue-grad.png" />';
 		}
 		else {
@@ -326,7 +395,7 @@ function Dialog(dialogType, genotype)
 	this.updateImageSubtitle = function()
 	{
 		var subtitle = $('.designer_img_subtitle');
-		var phenotype = this.genotype.getPhenotype();
+		var phenotype = this.tempGenotype.getPhenotype();
 		subtitle.text(phenotype.phenotypeString());
 	};
 
@@ -366,14 +435,11 @@ function Dialog(dialogType, genotype)
 	this.onCompleteSubmit = function()
 	{
 		var history = Reg.getHistory();
-		var overview = new Overview();
 
-		this.updateGenotype();
-		history.parents[this.genotype.getSex()] = this.genotype;
+		//this.updateGenotype();
 
-		overview.present(); // XXX: This object is now distructed.
+		// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+
 	};
-	
-
 };
 

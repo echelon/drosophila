@@ -23,11 +23,18 @@ function Genotype()
 
 	/**
 	 * Return textual representation of sex.
+	 * TODO: Capitalization feature is terrible.
 	 */
-	this.getSexStr = function() {
+	this.getSexStr = function(caps) {
 		if(this.sex == 'f') {
+			if(caps) {
+				return 'Female';
+			};
 			return 'female';
-		}
+		};
+		if(caps) {
+			return 'Male';
+		};
 		return 'male';
 	};
 
@@ -110,6 +117,21 @@ function Genotype()
 		ret = ret.substr(0, ret.length - 2);
 		ret += ' (' + this.getSexStr() + ')'; 
 		return 'Genotype: ' + ret; 
+	};
+
+	/**
+	 * Make a copy of the current genotype.
+	 */
+	this.copy = function()
+	{
+		var geno = new Genotype();
+		
+		geno.sex = this.sex;
+		for(var k in this.genes) {
+			geno.genes[k] = this.genes[k];
+		};
+
+		return geno;
 	};
 
 	/**
