@@ -29,7 +29,7 @@ function Phenotype(genotype)
 				allele = tr[1]; // Dom or lethal
 			}
 			else if(tr[0].code == tr[1].code) {
-				allele = tr[0]; // Two copies.
+				allele = tr[0]; // Two copies -> homozygous.
 			};
 		};
 			

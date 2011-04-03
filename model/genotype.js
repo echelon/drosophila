@@ -351,6 +351,8 @@ function Genotype()
 	 */
 	this.recombine = function(genotype, number)
 	{
+		var mother, father;
+
 		// Func: Get a union of all traits
 		var traitUnion = function(genoA, genoB) {
 			dict = {};
@@ -363,6 +365,15 @@ function Genotype()
 			return dict;
 		};
 
+		if(this.sex == 'm') {
+			father = this;
+			mother = genotype;
+		}
+		else {
+			father = genotype;
+			mother = this;
+		};
+
 		var offspring = [];
 		var vary = rand(20); // TODO: Poor randomization
 		var traits = traitUnion(this, genotype);	
@@ -372,31 +383,36 @@ function Genotype()
 		};
 
 		//number += vary;
-
+		
 		for(var i = 0; i < number; i++) {
 			var indiv = new Genotype();
+			var newSex;
 
 			if(rand()) {
-				indiv.setSex('m');
+				newSex = 'm';
 			}
 			else {
-				indiv.setSex('f');
+				newSex = 'f';
 			};
+
+			indiv.setSex(newSex);
 
 			for(abbr in traits) {
 				var a1 = null;
 				var a2 = null;
 				var idx = 0;
-				if(abbr in this.genes) {
+				if(abbr in mother.genes) {
 					idx = rand();
-					if(idx in this.genes[abbr]) {
-						a1 = this.genes[abbr][idx];
+					if(idx in mother.genes[abbr]) {
+						a1 = mother.genes[abbr][idx];
 					};
 				};
-				if(abbr in genotype.genes) {
+				if(abbr in father.genes) {
 					idx = rand();
-					if(idx in genotype.genes[abbr]) {
-						a2 = genotype.genes[abbr][idx];
+					if(idx in father.genes[abbr] && 
+							!(newSex == 'm' && 
+								!father.genes[abbr][idx].isAutosomal())) {
+						a2 = father.genes[abbr][idx];
 					};
 				};
 				indiv._setAlleles(a1, a2);

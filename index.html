@@ -26,10 +26,11 @@
 				DomReg();
 
 				// XXX: Work with pregenerated data
-				var male = new Genotype();
+				/*var male = new Genotype();
 				
 				male.setSex('m');
-				male.setHomozygousFor('E');
+				//male.setHomozygousFor('E');
+				male.setHomozygousFor('F');
 				Reg.getHistory().curGeneration.father = male;
 
 				var female = new Genotype();
@@ -41,7 +42,7 @@
 
 				<!-- Second gen -->
 
-				var male2 = new Genotype();
+				/*var male2 = new Genotype();
 				male2.setSex('m');
 				//male2.setHomozygousFor('SV');
 				//male2.setHomozygousFor('D');
@@ -71,18 +72,8 @@
 			</div>
 			<!-- Main: This is where the active GUI elements will show up. -->
 			<div id="main"></div>
-			<div id="todo">
-				<p><strong>TODO List:</strong> Notes concerning code progress.</p>
-				<ul>
-					<li><strong>Images</strong> &mdash; procedurally generate images of each phenotype. 
-					Requires artwork.</li>
-					<li><strong>Tooling</strong> &mdash; Python compressor: flatten/merge all templates, 
-					etc. into one static HTML file. Will need a new/supplemented controller to support this. 
-					Also needs to batch minify all of the javascripts into one file.</li>
-					<li><strong>Model</strong> &mdash; Parentals have 'history' recording the source they 
-					came from, eg. generation number or null</li>
-				</ul>	
-			</div>
+			<br />
+			<br />
 		</div>
 	</body>
 </html>

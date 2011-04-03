@@ -69,6 +69,15 @@ function Overview()
 				dialog.open();
 				return false; // Nofollow link
 			});
+			$(selector + ' .edit_link').bind('click', function() { 
+				dialog.open();
+				return false; // Nofollow link
+			});
+			$(selector + ' .img_link').bind('click', function() { 
+				dialog.open();
+				return false; // Nofollow link
+			});
+
 		};
 
 		rebuildParent(Reg.getHistory().curGeneration.father, this.dialogA, '#new_father');
