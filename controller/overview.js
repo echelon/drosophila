@@ -6,8 +6,8 @@ function Overview()
 {
 	var that = this;
 
-	this.dialogA = new Dialog('m');
-	this.dialogB = new Dialog('f');
+	this.dialogA = new Builder('m');
+	this.dialogB = new Builder('f');
 
 	$('#main').bind('rebuildLayout', function() { that.rebuildLayout(); });
 	$('#main').bind('rebuildGen', function() { that.rebuildCurrentGen(); });
@@ -70,7 +70,7 @@ function Overview()
 					$(selector + ' .old_link_p').hide();
 				};
 			};
-	
+
 			// Setup callbacks.
 			$(selector + ' .new_link').bind('click', function() { 
 				dialog.open();
