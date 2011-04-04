@@ -116,9 +116,10 @@ function Generation(parent1, parent2, children)
 
 	/**
 	 * Generate and return the 'phenotype -> count' map. 
+	 * XXX: Option to select only one sex.
 	 * TODO: Amortize this. 
 	 */
-	this.phenotypeMap = function()
+	this.phenotypeMap = function(sex)
 	{
 		var phenMap, h, hash, geno, pheno;
 
@@ -127,6 +128,10 @@ function Generation(parent1, parent2, children)
 		for(h in this._offspring)
 		{
 			geno = this._offspring[h];
+			if(sex && sex != geno.genotype.sex) {
+				continue;
+			}
+
 			pheno = geno.genotype.getPhenotype();
 			hash = pheno.hash();
 

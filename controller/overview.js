@@ -56,11 +56,20 @@ function Overview()
 		var rebuildParent = function(parent, buildDia, selectDia, selector) 
 		{
 			if(parent) {
-				$(selector + ' .new_link_p').hide();
-				$(selector + ' .old_link_p').hide();
-				$(selector + ' .edit_link_p').show();
-				$(selector + ' .status').html(parent.getPhenotype()
-						.phenotypeString());
+				if(parent.source == 'created') {
+					$(selector + ' .new_link_p').hide();
+					$(selector + ' .old_link_p').hide();
+					$(selector + ' .edit_link_p').show();
+					$(selector + ' .status').html(parent.getPhenotype()
+							.phenotypeString());
+				}
+				else {
+					$(selector + ' .new_link_p').hide();
+					$(selector + ' .old_link_p').hide();
+					$(selector + ' .edit_link_p').hide();
+					$(selector + ' .status').html(parent.getPhenotype()
+							.phenotypeString());
+				};
 			}
 			else {
 				$(selector + ' .new_link_p').show();
@@ -120,7 +129,7 @@ function Overview()
 		};
 
 		// Accordion setup & layout options
-		$('.accordion').accordion({
+		$('#overview_accordion').accordion({
 			animated: 'slide',
 			collapsible: true,
 			clearStyle: true,

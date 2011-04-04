@@ -1,26 +1,20 @@
-<div class="designer" id="dialog${id}">
-	<div class="designer_img_div">
-		<div class="designer_img">Image Here</div>
-		<p class="designer_img_subtitle">Phenotype Here</p>
+<!-- Inserted into dialog.html -->
+
+<div class="selector_accordion accordion">
+
+	{{each(i, val) generations}}
+
+	<h3><a href="#">Generation #${i+1}</a></h3>
+	<div class="selector_accordion_contents">
+		<ul>
+			{{each val.phenotypeMap(sex)}}
+			<li><a href="#" class="selector_link" generation="${i}" 
+				phenotype="${$value.phenotype.hash()}">${$value.phenotype.phenotypeString()} 
+					&mdash; ${$value.count}</a></li>
+			{{/each}}
+		</ul>
 	</div>
-	<div class="designer_other">
-		<form class="designer_form_add_allele" action="#" method="get">
-			<strong>Set:</strong>
-			<select name="trait" class="trait" disabled="true">
-				<option value="none">Trait</option>
-			</select>
-			<select name="allele" class="allele" disabled="true">
-				<option value="none">Allele</option>
-			</select>
-			<input type="submit" class="trait_allele_submit" 
-					disabled="true" value="Add" />
-		</form>
-		<div class="designer_history_feed">
-			<ul>
-				<li>All traits are WT by default.</li>
-			</ul>
-		</div>
-	</div>
+
+	{{/each}}
+
 </div>
-
-

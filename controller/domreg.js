@@ -42,11 +42,12 @@ function DomReg()
 	if(typeof DomReg._numLoaded == 'undefined') {
 		// Keep track of template loading.
 		DomReg._numLoaded = 0;
-		DomReg._numToLoad = 3;
+		DomReg._numToLoad = 4;
 
 		loadTemplate('overview', './view/overview.html');
 		loadTemplate('selector', './view/selector.html');
 		loadTemplate('builder', './view/builder.html');
+		loadTemplate('dialog', './view/dialog.html');
 	};
 
 	/**
