@@ -54,6 +54,7 @@ function Overview()
 		var rebuildParent = function(parent, dialog, selector) {
 			if(parent) {
 				$(selector + ' .new_link_p').hide();
+				$(selector + ' .old_link_p').hide();
 				$(selector + ' .edit_link_p').show();
 				$(selector + ' .status').html(parent.getPhenotype()
 						.phenotypeString());
@@ -62,6 +63,12 @@ function Overview()
 				$(selector + ' .new_link_p').show();
 				$(selector + ' .edit_link_p').hide();
 				$(selector + ' .status').html('');
+				if(Reg.getHistory().generations.length > 0) {
+					$(selector + ' .old_link_p').show();
+				}
+				else {
+					$(selector + ' .old_link_p').hide();
+				};
 			};
 	
 			// Setup callbacks.

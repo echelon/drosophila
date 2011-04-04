@@ -15,6 +15,11 @@ function Genotype()
 
 	this.sex = 'f'; // TODO: Read straight from genome? 
 
+	/**
+	 * How the genotype was created.
+	 * Values can be: 'created' or 'cross'
+	 */
+	this.source = 'created';
 
 	/**
 	 * Get the sex (m or f).
@@ -127,6 +132,7 @@ function Genotype()
 		var geno = new Genotype();
 		
 		geno.sex = this.sex;
+		geno.source = this.source;
 		for(var k in this.genes) {
 			geno.genes[k] = this.genes[k];
 		};
@@ -386,8 +392,9 @@ function Genotype()
 		
 		for(var i = 0; i < number; i++) {
 			var indiv = new Genotype();
-			var newSex;
+			indiv.source = 'cross';
 
+			var newSex;
 			if(rand()) {
 				newSex = 'm';
 			}

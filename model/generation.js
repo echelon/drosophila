@@ -90,7 +90,33 @@ function Generation(parent1, parent2, children)
 	}
 
 	/**
+	 * Get a child matching the phenotype (or hash thereof). 
+	 * XXX: A random genotype that matches the phenotype is not
+	 * selected due to the way I have elected to store this 
+	 * information. A more probabilisitic approach is advisable...
+	 * TODO: Amortize this
+	 */
+	this.getChildMatchingPhenotype(phenotype)
+	{
+		var h, geno;
+
+		if(phenotype instanceof Phenotype) {
+			phenotype = phenotype.hash();
+		};
+
+		for(h in this._offspring)
+		{
+			geno = this._offspring[h].genotype;
+			if(phenotype == geno.getPhenotype().hash()) {
+				return geno;
+			};
+		};
+		return null;
+	};
+
+	/**
 	 * Generate and return the 'phenotype -> count' map. 
+	 * TODO: Amortize this. 
 	 */
 	this.phenotypeMap = function()
 	{
@@ -119,6 +145,7 @@ function Generation(parent1, parent2, children)
 	 * Generate and return the 'phenotype -> count' map, but aggregate
 	 * on sex.
 	 * TODO: Rename method? Really hard to remember its name. 
+	 * TODO: Amoritize this.
 	 */
 	this.phenotypeWithoutSexMap = function()
 	{

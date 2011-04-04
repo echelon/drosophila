@@ -5,10 +5,9 @@
  */
 function Phenotype(genotype)
 {
-	this.sex = '';
-	this.genes = {};
-
 	this.sex = genotype.sex;
+	this.source = genotype.source; // XXX: Possibly important for phenotype display algo...
+	this.genes = {};
 
 	for(abbr in genotype.genes) {
 		var tr = genotype.genes[abbr];
