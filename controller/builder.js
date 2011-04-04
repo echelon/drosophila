@@ -308,7 +308,7 @@ function Builder(sex)
 	this.updateTempGenotype = function()
 	{
 		assert((this.tempGenotype), 
-				'Dialog.updateTempGenotype(): no genotype!');
+				'Builder.updateTempGenotype(): no genotype!');
 
 		for(var i = 0; i < this.alleles.length; i++) {
 			this.tempGenotype.setHomozygousFor(this.alleles[i]);
@@ -368,7 +368,10 @@ function Builder(sex)
 	};
 };
 
-Builder.prototype = new Dialog();
+// XXX/TODO: I really don't get Prototype inheritance... 
+// Keeping the following line seems to introduce a bug (as documented
+// in the git logs). And why didn't mixed inheritance work?
+//Builder.prototype = new Dialog();
 Builder.prototype.constructor = Builder;
 
 

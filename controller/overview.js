@@ -51,7 +51,8 @@ function Overview()
 		var that = this;
 
 		// Rebuild the parent components of the cross
-		var rebuildParent = function(parent, dialog, selector) {
+		var rebuildParent = function(parent, dialog, selector) 
+		{
 			if(parent) {
 				$(selector + ' .new_link_p').hide();
 				$(selector + ' .old_link_p').hide();
@@ -84,7 +85,6 @@ function Overview()
 				dialog.open();
 				return false; // Nofollow link
 			});
-
 		};
 
 		rebuildParent(Reg.getHistory().curGeneration.father, this.dialogA, '#new_father');

@@ -47,5 +47,12 @@ function DomReg()
 		loadTemplate('overview', './view/overview.html');
 		loadTemplate('create', './view/create.html');
 	};
+
+	/**
+	 * Determine if done loading templates.
+	 */
+	DomReg.doneLoading = function() {
+		return DomReg._numLoaded == DomReg._numToLoad;
+	};
 };
 

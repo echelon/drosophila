@@ -88,6 +88,9 @@ function Dialog(sex)
 	 * PROTECTED
 	 * Helper function: adds #dialogId to a css selector.
 	 */
-	this._select = function(s) { return '#dialog' + this.id + ' ' + s; };
+	this._select = function(s) 
+	{ 
+		return '#dialog' + this.id + ' ' + s;
+	};
 };
 
