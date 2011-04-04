@@ -21,21 +21,7 @@ function Dialog(sex)
 	this.sex = 'f';
 
 	// The jQuery dialog object.
-	this.dialog = $.tmpl('create', {id:this.id});
-	this.dialog.dialog({
-		autoOpen: false,
-		modal: true,
-		title: 'Untitled',
-		width: 700,
-		height: 400,
-		draggable: false,
-		resizable: false,
-		close: function(event, ui) { that.onClose(); },
-		buttons: { 
-			/*'Save': function() { that.saveAndClose(); },*/
-			Cancel: function() { that.close(); }
-		}
-	});
+	this.dialog = null;
 
 	var parseSex = function(s) {
 		switch(s.toLowerCase()) {

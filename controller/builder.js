@@ -25,17 +25,22 @@ function Builder(sex)
 	// All of the alleles thus far added.
 	this.alleles = [];
 
-	// jQuery UI dialog buttons
-	this.dialog.dialog('option', 'buttons', [
-		{
-			text: 'Save',
-			click: function() { that.saveAndClose(); }
-		},
-		{
-			text: 'Cancel',
-			click: function() { that.close(); }
+	// jQuery UI dialog 
+	this.dialog = $.tmpl('builder', {id:this.id});
+	this.dialog.dialog({
+		autoOpen: false,
+		modal: true,
+		title: 'Untitled',
+		width: 700,
+		height: 400,
+		draggable: false,
+		resizable: false,
+		close: function(event, ui) { that.onClose(); },
+		buttons: { 
+			'Save': function() { that.saveAndClose(); },
+			Cancel: function() { that.close(); }
 		}
-	]);
+	});
 
 	// Form Event Callbacks
 	$(this._select('.trait')).bind('change', function() { that.traitSelected(); });

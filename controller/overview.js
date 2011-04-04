@@ -8,6 +8,8 @@ function Overview()
 
 	this.dialogA = new Builder('m');
 	this.dialogB = new Builder('f');
+	this.selectorA = new Selector('m');
+	this.selectorB = new Selector('f');
 
 	$('#main').bind('rebuildLayout', function() { that.rebuildLayout(); });
 	$('#main').bind('rebuildGen', function() { that.rebuildCurrentGen(); });
@@ -51,7 +53,7 @@ function Overview()
 		var that = this;
 
 		// Rebuild the parent components of the cross
-		var rebuildParent = function(parent, dialog, selector) 
+		var rebuildParent = function(parent, buildDia, selectDia, selector) 
 		{
 			if(parent) {
 				$(selector + ' .new_link_p').hide();
@@ -74,21 +76,25 @@ function Overview()
 
 			// Setup callbacks.
 			$(selector + ' .new_link').bind('click', function() { 
-				dialog.open();
+				buildDia.open();
 				return false; // Nofollow link
 			});
 			$(selector + ' .edit_link').bind('click', function() { 
-				dialog.open();
+				buildDia.open();
 				return false; // Nofollow link
 			});
 			$(selector + ' .img_link').bind('click', function() { 
-				dialog.open();
+				buildDia.open();
+				return false; // Nofollow link
+			});
+			$(selector + ' .old_link').bind('click', function() { 
+				selectDia.open();
 				return false; // Nofollow link
 			});
 		};
 
-		rebuildParent(Reg.getHistory().curGeneration.father, this.dialogA, '#new_father');
-		rebuildParent(Reg.getHistory().curGeneration.mother, this.dialogB, '#new_mother');
+		rebuildParent(Reg.getHistory().curGeneration.father, this.dialogA, this.selectorA, '#new_father');
+		rebuildParent(Reg.getHistory().curGeneration.mother, this.dialogB, this.selectorB, '#new_mother');
 	};
 
 	/**
@@ -97,7 +103,7 @@ function Overview()
 	 */
 	this.rebuildLayout = function()
 	{
-		var tmpl;
+		var tmpl, active;
 
 		tmpl = $.tmpl('overview', { 
 			generations: Reg.getHistory().generations 
@@ -106,11 +112,19 @@ function Overview()
 		$('#main').html('');
 		tmpl.appendTo('#main');
 
+		// Child that is open by default. Show the cross results by
+		// default, and show "new cross" only on the first go.
+		active = Reg.getHistory().generations.length;
+		if(active > 0) {
+			active -= 1;
+		};
+
 		// Accordion setup & layout options
 		$('.accordion').accordion({
 			animated: 'slide',
 			collapsible: true,
-			clearStyle: true
+			clearStyle: true,
+			active: active 
 		});
 
 		// Stats tabs for prev generations
