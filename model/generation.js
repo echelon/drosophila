@@ -96,7 +96,7 @@ function Generation(parent1, parent2, children)
 	 * information. A more probabilisitic approach is advisable...
 	 * TODO: Amortize this
 	 */
-	this.getChildMatchingPhenotype(phenotype)
+	this.getChildMatchingPhenotype = function(phenotype)
 	{
 		var h, geno;
 
