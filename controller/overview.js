@@ -70,7 +70,7 @@ function Overview()
 					$(selector + ' .old_link_p').hide();
 				};
 			};
-	
+
 			// Setup callbacks.
 			$(selector + ' .new_link').bind('click', function() { 
 				dialog.open();

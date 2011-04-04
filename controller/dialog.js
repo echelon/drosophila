@@ -48,64 +48,46 @@ function Dialog(sex)
 	};
 
 	this.sex = parseSex(sex);
-};
-
-/**
- * Dialog Methods
- */
-Dialog.prototype = 
-{
-	constructor: Dialog,
 
 	/**
 	 * Called to open the dialog. 
 	 * Loads the proper state (create or edit) for the current action. 
 	 */
-	open: function()
+	this.open = function()
 	{
-		alert('open');
 		this._beforeOpen();
 		this.dialog.dialog('open');
-	},
+	};
 
 	/**
 	 * PROTECTED
 	 * Setup to do before opening. 
 	 */
-	_beforeOpen: function() {},
+	this._beforeOpen = function() {};
 
 	/**
 	 * Close the Dialog.
 	 * Fires the onClose() callback.
 	 */
-	close: function() { this.dialog.dialog('close'); },
+	this.close = function() { this.dialog.dialog('close'); };
 
 	/**
 	 * CALLBACK
 	 * When the modal dialog is closed.
 	 */
-	onClose: function() {},
+	this.onClose = function() {};
 
 	/**
 	 * Misc jQuery UI controls.
 	 */
-	getTitle: function() { return this.dialog.dialog('option', 'title'); },
-	setTitle: function(t) { this.dialog.dialog('option', 'title', t); },
-	isOpen: function() { return this.dialog.dialog('isOpen'); },
+	this.getTitle = function() { return this.dialog.dialog('option', 'title'); };
+	this.setTitle = function(t) { this.dialog.dialog('option', 'title', t); };
+	this.isOpen = function() { return this.dialog.dialog('isOpen'); };
 
 	/**
 	 * PROTECTED
 	 * Helper function: adds #dialogId to a css selector.
 	 */
-	_select: function(s) { return '#dialog' + this.id + ' ' + s; }
+	this._select = function(s) { return '#dialog' + this.id + ' ' + s; };
 };
-
-// TODO
-Dialog.prototype.open = function()
-	{
-		alert('open');
-		this._beforeOpen();
-		this.dialog.dialog('open');
-	};
-
 
