@@ -140,7 +140,10 @@ function Overview()
 		$('.tabs').tabs();
 
 		// Callbacks
-		$('#cross_form').bind('submit', function() { that.onCross(); });
+		$('#cross_form').bind('submit', function() { 
+				that.onCross(); 
+				return false; // prevent submit
+		});
 
 		this.rebuildCurrentGen();
 	};
