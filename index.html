@@ -5,6 +5,8 @@
 		<script type="text/javascript" src="./lib/jquery.js"></script>
 		<script type="text/javascript" src="./lib/jquery-ui.js"></script>
 		<script type="text/javascript" src="./lib/jquery.tmpl.js"></script>
+		<script type="text/javascript" src="./lib/underscore.js"></script>
+		<script type="text/javascript" src="./lib/backbone.js"></script>
 		<script type="text/javascript" src="./model/allele.js"></script>
 		<script type="text/javascript" src="./model/trait.js"></script>
 		<script type="text/javascript" src="./model/generation.js"></script>
@@ -15,9 +17,6 @@
 		<script type="text/javascript" src="./model/genotype.js"></script>
 		<script type="text/javascript" src="./model/phenotype.js"></script>
 		<script type="text/javascript" src="./controller/domreg.js"></script>
-		<!-- TODO: Was there a form.js?
-		<script type="text/javascript" src="./controller/form.js"></script>
-		-->
 		<script type="text/javascript" src="./controller/dialog.js"></script>
 		<script type="text/javascript" src="./controller/builder.js"></script>
 		<script type="text/javascript" src="./controller/selector.js"></script>
@@ -32,7 +31,7 @@
 				DomReg();
 
 				// XXX: Work with pregenerated data
-				/*var male = new Genotype();
+				var male = new Genotype();
 				
 				male.setSex('m');
 				//male.setHomozygousFor('E');
